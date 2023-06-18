@@ -1,100 +1,124 @@
-DIGITO [0-9]
+DIG [0-9]
 LETRA [a-zA-Z]
-IDENTIFICADOR (LETRA)([LETRA]|[DIGITO])*
+ID ((LETRA)([LETRA]|[DIG])*)
 STRING (\".*\")
+INCR "++"
 SOMA "+"
 SUB "-"
 MULT "*"
 DIV "/"
 ATRIB "="
 IGUAL "=="
-COMPARADOR (<|>|<\=|>\=)
+COMP (<|>|<\=|>\=)
 DIF "!="
 AND "&&"
 OR "||"
 NOT "!"
-ABRE_CHAVES "{"
-FECHA_CHAVES "}"
-ABRE_COLCHETES "["
-FECHA_COLCHETES "]"
-ABRE_PARENTESES "("
-FECHA_PARENTESES ")"
+A_CHAVES "{"
+F_CHAVES "}"
+A_COLCHETES "["
+F_COLCHETES "]"
+A_PARENTESES "("
+F_PARENTESES ")"
 DOIS_PONTOS ":"
 PONTO_VIRG ";"
 VIRG ","
 PONTO "."
+INCLUDE ("#include"[ ]*<.+\.h>)
 
 %{
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
     #include "hashtable.h"
+	#include "test_parser.tab.h"
     int line = 1;
 %}
 
 %%
 	/*REGRAS*/
 	/*Nao usar [x|y], usar (x|y) ou [xy]*/
+	
 
-{STRING} { return STRING; }
+{STRING} { 
+	printf("Token: ID \"%s\"\n",yytext);
+	return STRING;
+}
 
 (while) {
-	printf("Token: Palavra reservada -> %s\n",yytext);
-	insert(yytext, strlen(yytext), 0, line);
+	printf("Token: ID \"%s\"\n",yytext);
+	return WHILE;
 }
 
 (for) {
-	printf("Token: Palavra reservada -> %s\n",yytext);
-	insert(yytext, strlen(yytext), 0, line);
+	printf("Token: ID \"%s\"\n",yytext);
+	return FOR;
 }
 
 (if) {
-	printf("Token: Palavra reservada -> %s\n",yytext);
-	insert(yytext, strlen(yytext), 0, line);
+	printf("Token: ID \"%s\"\n",yytext);
+	return IF;
 }
 
 (else) {
-	printf("Token: Palavra reservada -> %s\n",yytext);
-	insert(yytext, strlen(yytext), 0, line);
+	printf("Token: ID \"%s\"\n",yytext);
+	return ELSE;
 }
 
-(char|int|float|double|void) {
-	printf("Token: Palavra reservada -> %s\n",yytext);
-	insert(yytext, strlen(yytext), 0, line);
+(char) {
+	printf("Token: ID \"%s\"\n",yytext);
+	return CHAR;
+}
+
+(int) {
+	printf("Token: ID \"%s\"\n",yytext);
+	return INT;
+}
+
+(float) {
+	printf("Token: ID \"%s\"\n",yytext);
+	return FLOAT;
+}
+
+(double) {
+	printf("Token: ID \"%s\"\n",yytext);
+	return DOUBLE;
+}
+
+(void) {
+	printf("Token: ID \"%s\"\n",yytext);
+	return VOID;
 }
 
 (return) {
-	printf("Token: Palavra reservada -> %s\n",yytext);
-	insert(yytext, strlen(yytext), 0, line);
+	printf("Token: ID \"%s\"\n",yytext);
+	return RETURN;
 }
 
-(signed|unsigned|short|long) {
-	printf("Token: Palavra reservada -> %s\n",yytext);
-	insert(yytext, strlen(yytext), 0, line);
-}
-
-{LETRA}({LETRA}|{DIGITO})* {
-	if(strlen(yytext) > 20) printf("ERRO: Tamanho maximo de identificador (20) excedido!\n");
+{ID} {
+	if(strlen(yytext) > 20) printf("ERRO: Tamanho maximo de ID (20) excedido!\n");
 	else{
-		printf("Token: Identificador \"%s\"\n",yytext);
+		printf("Token: ID \"%s\"\n",yytext);
 		insert(yytext, strlen(yytext), 0, line);
 		return ID;
 	}
 }
 
-{DIGITO}            { return DIGITO; }
-{ABRE_CHAVES}       { return ABRE_CHAVES; }
-{ABRE_COLCHETES}    { return ABRE_COLCHETES; }
-{ABRE_PARENTESES}   { return ABRE_PARENTESES; }
-{FECHA_CHAVES}      { return FECHA_CHAVES; }
-{FECHA_COLCHETES}   { return FECHA_COLCHETES; }
-{FECHA_PARENTESES}  { return FECHA_PARENTESES; }
+{INCLUDE}		 { printf("Token: ID \"%s\"\n",yytext);return INCLUDE;}
+{DIG}            { return DIG; }
+{A_CHAVES}       { return A_CHAVES; }
+{A_COLCHETES}    { return A_COLCHETES; }
+{A_PARENTESES}   { return A_PARENTESES; }
+{F_CHAVES}      { return F_CHAVES; }
+{F_COLCHETES}   { return F_COLCHETES; }
+{F_PARENTESES}  { return F_PARENTESES; }
 {DOIS_PONTOS}       { return DOIS_PONTOS;}
 {PONTO_VIRG}        { return PONTO_VIRG;}
 {VIRG}              { return VIRG;}
 {PONTO}             { return PONTO;}
 {IGUAL}             { return IGUAL;}
 {ATRIB}             { return ATRIB;}
+{INCR}				{ return INCR;}
 {SOMA}              { return SOMA;}
 {SUB}               { return SUB;}
 {MULT}              { return MULT;}
@@ -102,29 +126,15 @@ PONTO "."
 {AND}               { return AND;}
 {OR}                { return OR;}
 {NOT}               { return NOT;}
-{COMPARADOR}             { return COMPARADOR; }
+{COMP}             { return COMP; }
 
-"\n" {++line;}
+"\n" {printf("Token: ID \"%s\"\n",yytext);++line;}
 
-[ \t\r\f]+
+[ \t\r]+ {;}
 
 . { printf("Token [%s] nao identificado na linha: %d\n", yytext, line);}
 
 %%
 int yywrap(){
 	return 1;
-}
-
-int main(int argc, char *argv[]) {
- init_hash_table();
- yyin = fopen(argv[1], "r");
- if(yyin != NULL){
- 	yylex();
- 	fclose(yyin);
- 	yyout = fopen("symtab_dump.txt", "w");
-	symtab_dump(yyout);
- 	fclose(yyout);
- }
- else printf("Execute com um arquivo! Exemplo: a.exe nomedoarquivo.txt\n");
- return 0;
 }

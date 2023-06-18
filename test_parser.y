@@ -1,18 +1,18 @@
 %{
-	#include "symtab.c"
+	#include "hashtable.h"
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
 	extern FILE *yyin;
 	extern FILE *yyout;
-	extern int lineno;
+	extern int line;
 	extern int yylex();
 	void yyerror();
 %}
 
 /* token definition */
-%token DIG A_CHAVES A_COLCHETES A_PARENTESES F_CHAVES F_COLCHETES F_PARENTESES DOIS_PONTOS PONTO_VIRG VIRG PONTO IGUAL ATRIB SOMA SUB 
-%token MULT DIV AND OR NOT COMP IF ELSE FOR WHILE CHAR INT DOUBLE FLOAT VOID RETURN HEADER
+%token ID INCR DIG A_CHAVES A_COLCHETES A_PARENTESES F_CHAVES F_COLCHETES F_PARENTESES DOIS_PONTOS PONTO_VIRG VIRG PONTO IGUAL ATRIB SOMA SUB 
+%token MULT DIV AND OR NOT COMP IF ELSE FOR WHILE CHAR INT DOUBLE FLOAT VOID RETURN INCLUDE STRING
 
 %right ATRIB
 %left COMP
@@ -30,7 +30,7 @@
 programa: headers defs decls ;
 
 headers: headers headers
-	| HEADER;
+	| INCLUDE;
 
 defs: defs def
 	| def;
@@ -96,7 +96,7 @@ atribuicao: var ATRIB exp PONTO_VIRG ;
 
 void yyerror ()
 {
-  fprintf(stderr, "Erro de sintaxe na linha %d\n", lineno);
+  fprintf(stderr, "Erro de sintaxe na linha %d\n", line);
   exit(1);
 }
 
@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
  init_hash_table();
  yyin = fopen(argv[1], "r");
  if(yyin != NULL){
- 	yylex();
+ 	yyparse();
  	fclose(yyin);
  	yyout = fopen("symtab_dump.txt", "w");
 	symtab_dump(yyout);
