@@ -1,0 +1,115 @@
+%{
+	#include "symtab.c"
+	#include <stdio.h>
+	#include <stdlib.h>
+	#include <string.h>
+	extern FILE *yyin;
+	extern FILE *yyout;
+	extern int lineno;
+	extern int yylex();
+	void yyerror();
+%}
+
+/* token definition */
+%token DIG A_CHAVES A_COLCHETES A_PARENTESES F_CHAVES F_COLCHETES F_PARENTESES DOIS_PONTOS PONTO_VIRG VIRG PONTO IGUAL ATRIB SOMA SUB 
+%token MULT DIV AND OR NOT COMP IF ELSE FOR WHILE CHAR INT DOUBLE FLOAT VOID RETURN HEADER
+
+%right ATRIB
+%left COMP
+%left AND OR
+%left SOMA SUB
+%left MULT DIV
+%right NOT
+
+%start programa
+
+/* exp priorities and rules */
+
+%%
+
+programa: headers defs decls ;
+
+headers: headers headers
+	| HEADER;
+
+defs: defs def
+	| def;
+
+def: tipo vars PONTO_VIRG ;
+
+tipo: INT 
+	| CHAR 
+	| FLOAT 
+	| DOUBLE 
+	| VOID;
+
+vars: var 
+	| vars VIRG var;
+
+var: ID;
+
+decls: decls decl 
+	| decl;
+
+decl: if_decl
+	| for_decl
+	| while_decl
+	| atribuicao
+	| RETURN PONTO_VIRG
+;
+
+if_decl: IF A_PARENTESES exp F_PARENTESES corpo else_if_part else_part ;
+
+else_if_part: else_if_part ELSE IF A_PARENTESES exp F_PARENTESES corpo
+	| ELSE IF A_PARENTESES exp F_PARENTESES corpo
+	|
+; 
+
+else_part: ELSE corpo 
+	| /* vazio */ ; 
+
+for_decl: FOR A_PARENTESES exp PONTO_VIRG exp PONTO_VIRG exp F_PARENTESES corpo ;
+
+while_decl: WHILE A_PARENTESES exp F_PARENTESES corpo ;
+
+corpo: decl PONTO_VIRG 
+	| A_CHAVES decls F_CHAVES ;
+
+exp:
+    exp SOMA exp |
+    exp MULT exp |
+    exp DIV exp |
+    exp INCR |
+    INCR exp |
+    exp OR exp |
+    exp AND exp |
+    NOT exp |
+    exp IGUAL exp |
+    exp COMP exp |
+    A_PARENTESES exp F_PARENTESES |
+    var
+;
+
+atribuicao: var ATRIB exp PONTO_VIRG ; 
+
+%%
+
+void yyerror ()
+{
+  fprintf(stderr, "Erro de sintaxe na linha %d\n", lineno);
+  exit(1);
+}
+
+int main(int argc, char *argv[]) {
+ init_hash_table();
+ yyin = fopen(argv[1], "r");
+ if(yyin != NULL){
+ 	yylex();
+ 	fclose(yyin);
+ 	yyout = fopen("symtab_dump.txt", "w");
+	symtab_dump(yyout);
+ 	fclose(yyout);
+ }
+ else printf("Execute com um arquivo! Exemplo: a.exe nomedoarquivo.txt\n");
+ return 0;
+}
