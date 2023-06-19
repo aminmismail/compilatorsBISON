@@ -41,57 +41,46 @@ INCLUDE ("#include"[ ]*<.+\.h>)
 	
 
 {STRING} { 
-	printf("Token: ID \"%s\"\n",yytext);
 	return STRING;
 }
 
 (while) {
-	printf("Token: ID \"%s\"\n",yytext);
 	return WHILE;
 }
 
 (for) {
-	printf("Token: ID \"%s\"\n",yytext);
 	return FOR;
 }
 
 (if) {
-	printf("Token: ID \"%s\"\n",yytext);
 	return IF;
 }
 
 (else) {
-	printf("Token: ID \"%s\"\n",yytext);
 	return ELSE;
 }
 
 (char) {
-	printf("Token: ID \"%s\"\n",yytext);
 	return CHAR;
 }
 
 (int) {
-	printf("Token: ID \"%s\"\n",yytext);
 	return INT;
 }
 
 (float) {
-	printf("Token: ID \"%s\"\n",yytext);
 	return FLOAT;
 }
 
 (double) {
-	printf("Token: ID \"%s\"\n",yytext);
 	return DOUBLE;
 }
 
 (void) {
-	printf("Token: ID \"%s\"\n",yytext);
 	return VOID;
 }
 
 (return) {
-	printf("Token: ID \"%s\"\n",yytext);
 	return RETURN;
 }
 
@@ -100,6 +89,7 @@ INCLUDE ("#include"[ ]*<.+\.h>)
 	else{
 		printf("Token: ID \"%s\"\n",yytext);
 		insert(yytext, strlen(yytext), 0, line);
+		yylval.symtab_item = lookup(yytext);
 		return ID;
 	}
 }
