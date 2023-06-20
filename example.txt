@@ -1,8 +1,11 @@
 #include<kk.h>
-int i;
-double val, res;
-char c;
-c = 55;
-val = i+i;
-res = val + 2.5;
-return;
+
+int main(){
+    int i;
+    double val, res;
+    char c;
+    c = 55;
+    val = i+i;
+    res = val + 2.5;
+    return;
+}

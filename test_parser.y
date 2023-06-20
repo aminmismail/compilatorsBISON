@@ -41,7 +41,11 @@
 
 %%
 
-programa: headers functions defs decls ;
+programa: headers main ;
+
+main: tipo ID A_PARENTESES F_PARENTESES A_CHAVES mainfun F_CHAVES ;
+
+mainfun: defs decls RETURN PONTO_VIRG
 
 headers: headers headers
 	| INCLUDE;
