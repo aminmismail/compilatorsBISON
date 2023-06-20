@@ -14,7 +14,7 @@
 %union{
     char char_val;
 	int int_val;
-	double double_val;
+	float float_val;
 	char* str_val;
 	list_t* symtab_item;
 }
@@ -23,6 +23,10 @@
 %token <symtab_item> ID
 %token <int_val> INCR DIG A_CHAVES A_COLCHETES A_PARENTESES F_CHAVES F_COLCHETES F_PARENTESES DOIS_PONTOS PONTO_VIRG VIRG PONTO IGUAL ATRIB SOMA SUB 
 %token <int_val> MULT DIV AND OR NOT COMP IF ELSE FOR WHILE CHAR INT DOUBLE FLOAT VOID RETURN INCLUDE STRING
+%token <int_val> 	 INTEGER
+%token <float_val>   REAL
+%token <char_val> 	 CHARACTER
+%token <str_val>     STR
 
 %right ATRIB
 %left COMP
@@ -37,7 +41,7 @@
 
 %%
 
-programa: headers defs decls ;
+programa: headers functions defs decls ;
 
 headers: headers headers
 	| INCLUDE;
@@ -97,8 +101,16 @@ exp:
     exp IGUAL exp |
     exp COMP exp |
     A_PARENTESES exp F_PARENTESES |
-    var
+    var |
+	constval
 ;
+
+constval:
+	INTEGER |
+	REAL |
+	CHAR
+;
+
 
 atribuicao: var ATRIB exp PONTO_VIRG ; 
 
