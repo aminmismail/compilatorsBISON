@@ -76,12 +76,7 @@ decl: if_decl
 	| RETURN PONTO_VIRG
 ;
 
-if_decl: IF A_PARENTESES exp F_PARENTESES corpo else_if_part else_part ;
-
-else_if_part: else_if_part ELSE IF A_PARENTESES exp F_PARENTESES corpo
-	| ELSE IF A_PARENTESES exp F_PARENTESES corpo
-	|
-; 
+if_decl: IF A_PARENTESES exp F_PARENTESES corpo else_part ;
 
 else_part: ELSE corpo 
 	| /* vazio */ ; 
