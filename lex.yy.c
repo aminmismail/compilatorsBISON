@@ -432,14 +432,14 @@ static char *yy_last_accepting_cpos;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 ".\\flex_c.l"
+#line 1 ".\\lexer.l"
 #define INITIAL 0
-#line 33 ".\\flex_c.l"
+#line 33 ".\\lexer.l"
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
     #include "hashtable.h"
-	#include "test_parser.tab.h"
+	#include "parser.tab.h"
     int line = 1;
 #line 445 "lex.yy.c"
 
@@ -592,7 +592,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 41 ".\\flex_c.l"
+#line 41 ".\\lexer.l"
 
 	/*REGRAS*/
 	/*Nao usar [x|y], usar (x|y) ou [xy]*/
@@ -682,49 +682,49 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 45 ".\\flex_c.l"
+#line 45 ".\\lexer.l"
 {
 	return STRING;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 49 ".\\flex_c.l"
+#line 49 ".\\lexer.l"
 {
 	return WHILE;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 53 ".\\flex_c.l"
+#line 53 ".\\lexer.l"
 {
 	return FOR;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 57 ".\\flex_c.l"
+#line 57 ".\\lexer.l"
 {
 	return IF;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 61 ".\\flex_c.l"
+#line 61 ".\\lexer.l"
 {
 	return ELSE;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 65 ".\\flex_c.l"
+#line 65 ".\\lexer.l"
 {
 	return CHAR;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 69 ".\\flex_c.l"
+#line 69 ".\\lexer.l"
 {
 	printf("int\n");
 	return INT;
@@ -732,35 +732,35 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 74 ".\\flex_c.l"
+#line 74 ".\\lexer.l"
 {
 	return FLOAT;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 78 ".\\flex_c.l"
+#line 78 ".\\lexer.l"
 {
 	return DOUBLE;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 82 ".\\flex_c.l"
+#line 82 ".\\lexer.l"
 {
 	return VOID;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 86 ".\\flex_c.l"
+#line 86 ".\\lexer.l"
 {
 	return RETURN;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 90 ".\\flex_c.l"
+#line 90 ".\\lexer.l"
 {
 	printf("id encontrado\n");
 	if(strlen(yytext) > 20) printf("ERRO: Tamanho maximo de ID (20) excedido!\n");
@@ -774,157 +774,157 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 101 ".\\flex_c.l"
+#line 101 ".\\lexer.l"
 { return STR; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 102 ".\\flex_c.l"
+#line 102 ".\\lexer.l"
 { yylval.int_val = atoi(yytext); return INTEGER; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 103 ".\\flex_c.l"
+#line 103 ".\\lexer.l"
 { yylval.float_val = atof(yytext); return REAL; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 104 ".\\flex_c.l"
+#line 104 ".\\lexer.l"
 { yylval.char_val = yytext[0]; printf("%c\n", yylval.char_val); return CHARACTER; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 105 ".\\flex_c.l"
+#line 105 ".\\lexer.l"
 { return INCLUDE; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 106 ".\\flex_c.l"
+#line 106 ".\\lexer.l"
 { return DIG; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 107 ".\\flex_c.l"
+#line 107 ".\\lexer.l"
 { return A_CHAVES; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 108 ".\\flex_c.l"
+#line 108 ".\\lexer.l"
 { return A_COLCHETES; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 109 ".\\flex_c.l"
+#line 109 ".\\lexer.l"
 { return A_PARENTESES; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 110 ".\\flex_c.l"
+#line 110 ".\\lexer.l"
 { return F_CHAVES; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 111 ".\\flex_c.l"
+#line 111 ".\\lexer.l"
 { return F_COLCHETES; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 112 ".\\flex_c.l"
+#line 112 ".\\lexer.l"
 { return F_PARENTESES; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 113 ".\\flex_c.l"
+#line 113 ".\\lexer.l"
 { return DOIS_PONTOS;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 114 ".\\flex_c.l"
+#line 114 ".\\lexer.l"
 { return PONTO_VIRG;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 115 ".\\flex_c.l"
+#line 115 ".\\lexer.l"
 { return VIRG; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 116 ".\\flex_c.l"
+#line 116 ".\\lexer.l"
 { return PONTO; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 117 ".\\flex_c.l"
+#line 117 ".\\lexer.l"
 { return IGUAL; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 118 ".\\flex_c.l"
+#line 118 ".\\lexer.l"
 { return ATRIB; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 119 ".\\flex_c.l"
+#line 119 ".\\lexer.l"
 { return INCR; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 120 ".\\flex_c.l"
+#line 120 ".\\lexer.l"
 { return SOMA; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 121 ".\\flex_c.l"
+#line 121 ".\\lexer.l"
 { return SUB; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 122 ".\\flex_c.l"
+#line 122 ".\\lexer.l"
 { return MULT; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 123 ".\\flex_c.l"
+#line 123 ".\\lexer.l"
 { return DIV; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 124 ".\\flex_c.l"
+#line 124 ".\\lexer.l"
 { return AND; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 125 ".\\flex_c.l"
+#line 125 ".\\lexer.l"
 { return OR; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 126 ".\\flex_c.l"
+#line 126 ".\\lexer.l"
 { return NOT;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 127 ".\\flex_c.l"
+#line 127 ".\\lexer.l"
 { return COMP; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 129 ".\\flex_c.l"
+#line 129 ".\\lexer.l"
 {++line;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 131 ".\\flex_c.l"
+#line 131 ".\\lexer.l"
 {;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 133 ".\\flex_c.l"
+#line 133 ".\\lexer.l"
 { printf("Token [%s] nao identificado na linha: %d\n", yytext, line);}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 135 ".\\flex_c.l"
+#line 135 ".\\lexer.l"
 ECHO;
 	YY_BREAK
 #line 931 "lex.yy.c"
@@ -1813,7 +1813,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 135 ".\\flex_c.l"
+#line 135 ".\\lexer.l"
 
 int yywrap(){
 	return 1;
