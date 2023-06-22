@@ -1,8 +1,25 @@
 ------------ ------ ------------
 Name         Type   Line Numbers
 ------------ ------ -------------
-c            undef     6    7 
-i            undef     4    8    8 
-val          undef     5    8    9 
-res          undef     5    9 
+double       Keyword   6    7 
+return       Keyword  14 
+"adad"       string    9 
+(            undef     3 
+)            undef     3 
++            undef    12   13 
+;            undef     4    5    6    7    8    9   10   11   12   13   14 
+=            undef     9   10   11   12   13 
+c            int       8   10 
+i            int       4   12   12   14 
+55           int      10 
+val          real      6    7   11   12   13 
+res          undef    13 
+int          Keyword   3    4 
+{            undef     3 
+}            undef    15 
+str          string    5    9 
+2.5          real     13 
+8.2          real     11 
+char         Keyword   8 
+#include<kk.h> undef     1 
 main         undef     3 

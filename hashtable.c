@@ -35,7 +35,7 @@ void insert(char *name, int len, int type, int lineno){
 		l->lines->next = NULL;
 		l->next = hash_table[hashval];
 		hash_table[hashval] = l; 
-		printf("Inserido '%s' pela primeira vez na linha: %d\n", name, lineno); // error checking
+		//printf("Inserido '%s' pela primeira vez na linha: %d\n", name, lineno); // error checking
 	}
 	/* found in table, so just add line number */
 	else{
@@ -46,7 +46,7 @@ void insert(char *name, int len, int type, int lineno){
 		t->next = (RefList*) malloc(sizeof(RefList));
 		t->next->lineno = lineno;
 		t->next->next = NULL;
-		printf("Encontrado '%s' novamente na linha: %d\n", name, lineno);
+		//printf("Encontrado '%s' novamente na linha: %d\n", name, lineno);
 	}
 }
 
@@ -86,6 +86,7 @@ void symtab_dump(FILE * of){
 			if (l->st_type == INT_TYPE) fprintf(of,"%-7s","int");
 			else if (l->st_type == REAL_TYPE) fprintf(of,"%-7s","real");
 			else if (l->st_type == STR_TYPE) fprintf(of,"%-7s","string");
+			else if (l->st_type == KEYWORD) fprintf(of, "%-7s", "Keyword");
 			else if (l->st_type == ARRAY_TYPE){
 				fprintf(of,"array of ");
 				if (l->inf_type == INT_TYPE) 		   fprintf(of,"%-7s","int");
@@ -110,4 +111,27 @@ void symtab_dump(FILE * of){
 		}
     }
   }
+}
+
+void set_type(char *name, int st_type){
+	/* lookup entry */
+	list_t *l = lookup(name);
+
+	/* set "main" type */
+	l->st_type = st_type;
+
+}
+
+int get_type(char *name){
+	/* lookup entry */
+	list_t *l = lookup(name);
+
+	/* if "simple" type */
+	if(l->st_type == INT_TYPE || l->st_type == REAL_TYPE){
+		return l->st_type;
+	}
+	/* if array, pointer or function */
+	else{
+		return l->inf_type;
+	}
 }

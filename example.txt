@@ -2,10 +2,14 @@
 
 int main(){
     int i;
-    double val, res;
+    string str;
+    double val;
+    double val;
     char c;
+    str = "adad";
     c = 55;
+    val = 8.2;
     val = i+i;
     res = val + 2.5;
-    return;
+    return i;
 }

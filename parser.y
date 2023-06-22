@@ -12,21 +12,22 @@
 
 /* YYSTYPE*/
 %union{
-    char char_val;
-	int int_val;
-	float float_val;
-	char* str_val;
-	list_t* symtab_item;
+    struct var_name { 
+			char name[100]; 
+			struct node* nd;
+			int type;
+			list_t* symtab_item;
+		} nd_obj;
 }
 
 /* token definition */
-%token <symtab_item> ID
-%token <int_val> INCR DIG A_CHAVES A_COLCHETES A_PARENTESES F_CHAVES F_COLCHETES F_PARENTESES DOIS_PONTOS PONTO_VIRG VIRG PONTO IGUAL ATRIB SOMA SUB 
-%token <int_val> MULT DIV AND OR NOT COMP IF ELSE FOR WHILE CHAR INT DOUBLE FLOAT VOID RETURN INCLUDE STRING
-%token <int_val> 	 INTEGER
-%token <float_val>   REAL
-%token <char_val> 	 CHARACTER
-%token <str_val>     STR
+%token <nd_obj> ID
+%token <nd_obj> INCR DIG A_CHAVES A_COLCHETES A_PARENTESES F_CHAVES F_COLCHETES F_PARENTESES DOIS_PONTOS PONTO_VIRG VIRG PONTO IGUAL ATRIB SOMA SUB 
+%token <nd_obj> MULT DIV AND OR NOT COMP IF ELSE FOR WHILE CHAR INT DOUBLE FLOAT VOID RETURN INCLUDE STRING
+%token <nd_obj> 	 INTEGER
+%token <nd_obj>   REAL
+%token <nd_obj> 	 CHARACTER
+%token <nd_obj>     STR
 
 %right ATRIB
 %left COMP
@@ -34,6 +35,8 @@
 %left SOMA SUB
 %left MULT DIV
 %right NOT
+
+%type <nd_obj> var tipo 
 
 %start programa
 
@@ -53,18 +56,21 @@ headers: headers headers
 defs: defs def
 	| def;
 
-def: tipo vars PONTO_VIRG ;
+def: tipo var {
+	if(lookup($2.name)->st_type != 0){
+		printf("Erro: Redefinicao na linha %d\n", line);
+	}
+	set_type($2.name, $1.type);
+} PONTO_VIRG ;
 
-tipo: INT 
-	| CHAR 
-	| FLOAT 
-	| DOUBLE 
+tipo: INT 		{ $$.type = 1 ; } 
+	| CHAR  	{ $$.type = 1 ; }
+	| FLOAT 	{ $$.type = 2 ; }
+	| DOUBLE 	{ $$.type = 2 ; }
+	| STRING	{ $$.type = 3 ; }
 	| VOID;
 
-vars: var 
-	| vars VIRG var;
-
-var: ID;
+var: ID { strcpy($$.name, $1.name);};
 
 decls: decls decl 
 	| decl;
@@ -105,9 +111,10 @@ exp:
 ;
 
 constval:
-	INTEGER |
+	INTEGER | 
 	REAL |
-	CHAR
+	CHAR | 
+	STR
 ;
 
 

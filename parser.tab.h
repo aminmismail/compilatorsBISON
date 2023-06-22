@@ -88,18 +88,19 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 14 ".\\parser.y"
+#line 14 ".\\parser.y\\\\"
 
-    char char_val;
-	int int_val;
-	float float_val;
-	char* str_val;
-	list_t* symtab_item;
+    struct var_name { 
+			char name[100]; 
+			struct node* nd;
+			int type;
+			list_t* symtab_item;
+		} nd_obj;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 103 "parser.tab.h"
+#line 104 "parser.tab.h\\\\"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

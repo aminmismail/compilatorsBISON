@@ -16,6 +16,7 @@
 #define LOGIC_TYPE 4
 #define ARRAY_TYPE 5
 #define FUNCTION_TYPE 6
+#define KEYWORD 7
 
 /* Forma de passagem do parametro */
 #define BY_VALUE 1
@@ -49,7 +50,7 @@ typedef struct list_t{
     int st_type;
     // Tipo para arrays e funcoes
     int inf_type; 
-    int *i_vals; double *f_vals; char **s_vals;
+    int *i_vals; double *f_vals; char *s_vals;
     int array_size;
     // Parametros da funcao
     Param *parameters;
@@ -70,3 +71,5 @@ list_t *lookup_scope(char *name, int scope); // search for entry in scope
 void hide_scope(); // hide the current scope
 void incr_scope(); // go to next scope
 void symtab_dump(FILE *of); // dump file
+void set_type(char *name, int st_type); // Define o tipo de um simbolo na tabela 
+int get_type(char *name); // Retorna o tipo de um simbolo
