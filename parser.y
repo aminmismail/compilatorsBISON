@@ -1,5 +1,6 @@
 %{
 	#include "hashtable.h"
+	#include "ast.h"
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
@@ -8,6 +9,8 @@
 	extern int line;
 	extern int yylex();
 	void yyerror();
+
+	struct node* head;
 %}
 
 /* YYSTYPE*/
@@ -24,10 +27,10 @@
 %token <nd_obj> ID
 %token <nd_obj> INCR DIG A_CHAVES A_COLCHETES A_PARENTESES F_CHAVES F_COLCHETES F_PARENTESES DOIS_PONTOS PONTO_VIRG VIRG PONTO IGUAL ATRIB SOMA SUB 
 %token <nd_obj> MULT DIV AND OR NOT COMP IF ELSE FOR WHILE CHAR INT DOUBLE FLOAT VOID RETURN INCLUDE STRING
-%token <nd_obj> 	 INTEGER
-%token <nd_obj>   REAL
-%token <nd_obj> 	 CHARACTER
-%token <nd_obj>     STR
+%token <nd_obj> INTEGER
+%token <nd_obj> REAL
+%token <nd_obj> CHARACTER
+%token <nd_obj> STR
 
 %right ATRIB
 %left COMP
@@ -36,7 +39,7 @@
 %left MULT DIV
 %right NOT
 
-%type <nd_obj> var tipo 
+%type <nd_obj> var tipo programa main headers mainfun retorno defs decls def decl
 
 %start programa
 
@@ -44,11 +47,18 @@
 
 %%
 
-programa: headers main ;
+programa: headers main {
+	$$.nd = mknode(NULL, $2.nd, "program");
+	head = $$.nd;
+};
 
-main: tipo ID A_PARENTESES F_PARENTESES A_CHAVES mainfun F_CHAVES ;
+main: tipo ID A_PARENTESES F_PARENTESES A_CHAVES mainfun F_CHAVES { 
+	$$.nd = mknode($2.nd, $6.nd, "main"); 
+}
 
-mainfun: defs decls RETURN ID PONTO_VIRG
+retorno: RETURN ID 
+
+mainfun: defs decls retorno PONTO_VIRG
 
 headers: headers headers
 	| INCLUDE;
@@ -70,7 +80,9 @@ tipo: INT 		{ $$.type = 1 ; }
 	| STRING	{ $$.type = 3 ; }
 	| VOID;
 
-var: ID { strcpy($$.name, $1.name);};
+var: ID { 
+	strcpy($$.name, $1.name);
+};
 
 decls: decls decl 
 	| decl;
@@ -138,5 +150,6 @@ int main(int argc, char *argv[]) {
  	fclose(yyout);
  }
  else printf("Execute com um arquivo! Exemplo: a.exe nomedoarquivo.txt\n");
+ printtree(head);
  return 0;
 }
