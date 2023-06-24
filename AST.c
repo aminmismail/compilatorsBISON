@@ -26,3 +26,56 @@ void printInorder(struct node *tree) {
 		printInorder(tree->right);
 	}
 }
+
+int getLevelCount(struct node* tree){
+    if (tree == NULL)
+    {
+        return 0;
+    }
+    int leftMaxLevel = 1 + getLevelCount(tree->left);
+    int rightMaxLevel = 1 + getLevelCount(tree->right);
+    if (leftMaxLevel > rightMaxLevel)
+    {
+        return leftMaxLevel;
+    }
+    else
+    {
+        return rightMaxLevel;
+    }
+}
+
+void printLevel(struct node *tree, int level)
+{
+    if (tree != NULL && level == 0)
+    {
+        printf("%s ", tree->token);
+    }   
+    else if (tree != NULL)
+    {
+        printLevel(tree->left, level - 1);
+        printLevel(tree->right, level - 1);
+    }
+}
+
+void printElements(struct node* tree)
+{
+    int i;
+    int levelCount = getLevelCount(tree);
+    for (i = 0; i < levelCount; i++){
+        printLevel(tree, i);
+		printf("\n");
+    }
+}
+
+void print_tree_util(struct node *root, int space) {
+    if(root == NULL)
+        return;
+    space += 7;
+    print_tree_util(root->right, space);
+    for (int i = 7; i < space; i++)
+        printf(" ");
+    printf("%s\n", root->token);
+    print_tree_util(root->left, space);
+}
+
+
