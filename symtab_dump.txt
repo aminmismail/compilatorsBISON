@@ -1,24 +1,21 @@
------------- ------ ------------
-Name         Type   Line Numbers
------------- ------ -------------
-return       Keyword  11 
-(            undef     3    7 
-)            undef     3    7 
-+            undef     9 
-0            int       7 
-1            int       9 
-2            int       8 
-;            undef     4    5    6    7    7    8    9   11 
-<            undef     7 
-=            undef     7    8    9 
-++           undef     7 
-30           int       7 
-i            int       4    7    7    7 
-for          Keyword   7 
-t            int       6    9 
-v            int       5    8    9   11 
-int          Keyword   3    4    5    6 
-{            undef     3    7 
-}            undef    10   12 
-#include<header.h> undef     1 
-main         undef     3 
+------------            -----           ------ ------------
+Name                    Token           Type   Line Numbers
+------------            -=---           ------ -------------
+#include <stdlib.h>                     undef     2 
+return                                  Keyword  10 
+(                                       undef     3 
+)                                       undef     3 
++                                       undef     9 
+0                                       int      10 
+1                                       int       7 
+2                                       int       8 
+;                                       undef     4    5    6    7    8    9   10 
+=                                       undef     7    8    9 
+x                                       int       4    7    9 
+int                                     Keyword   3    4    5    6 
+y                                       int       5    8    9 
+z                                       int       6    9 
+{                                       undef     3 
+}                                       undef    11 
+#include <stdio.h>                      undef     1 
+main                                    undef     3 
