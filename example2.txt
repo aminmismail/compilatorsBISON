@@ -1,14 +1,12 @@
-#include<kk.h>
+#include<header.h>
 
 int main(){
     int i;
-    string str;
-    double val;
-    char c;
-    str = "adad";
-    c = 55;
-    val = 8.2;
-    val = i+i;
-    res = val + 2.5;
-    return res;
+    int v;
+    int t;
+    for(i = 0; i < 30; i++){
+        v = 2;
+        t =  v+1;
+    }
+    return v;
 }

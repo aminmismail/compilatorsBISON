@@ -132,7 +132,7 @@ INCLUDE ("#include"[ ]*<.+\.h>)
 					  yylval.nd_obj.type = REAL_TYPE;
 					  return REAL; }
 {CHARACTER}			{ strcpy(yylval.nd_obj.name,(yytext)); insert(yytext, strlen(yytext), 1, line); return CHARACTER; }
-{INCLUDE}		 	{ insert(yytext, strlen(yytext), 0, line); return INCLUDE; }
+{INCLUDE}		 	{ insert(yytext, strlen(yytext), 0, line); strcpy(yylval.nd_obj.name,(yytext)); return INCLUDE; }
 {A_CHAVES}       	{ insert(yytext, strlen(yytext), 0, line); return A_CHAVES; }
 {A_COLCHETES}    	{ insert(yytext, strlen(yytext), 0, line); return A_COLCHETES; }
 {A_PARENTESES}   	{ insert(yytext, strlen(yytext), 0, line); return A_PARENTESES; }
