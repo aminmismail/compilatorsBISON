@@ -48,65 +48,64 @@ INCLUDE ("#include"[ ]*<.+\.h>)
 
 (while) {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "While" ,line);
 	return WHILE;
 }
 
 (for) {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "For" ,line);
 	return FOR;
 }
 
 (if) {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "If" ,line);
 	return IF;
 }
 
 (else) {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "Else" ,line);
 	return ELSE;
 }
 
 (char) {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "Char", line);
 	return CHAR;
 }
 
 (int) {
 	strcpy(yylval.nd_obj.name,(yytext));
 	//yylval.type = INT_TYPE;
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "Int" ,line);
 	return INT;
 }
 
 (float) {
 	strcpy(yylval.nd_obj.name,(yytext));
 	//yylval.type = REAL_TYPE;
-	insert(yytext, strlen(yytext), 7, line);
-	
+	insert(yytext, strlen(yytext), 7, "Float", line);
 	return FLOAT;
 }
 
 (double) {
 	strcpy(yylval.nd_obj.name,(yytext));
 	//yylval.type = REAL_TYPE;
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "Double", line);
 	return DOUBLE;
 }
 
 (void) {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "Void" ,line);
 	return VOID;
 }
 
 (return) {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "Return" ,line);
 	return RETURN;
 }
 
@@ -116,7 +115,7 @@ INCLUDE ("#include"[ ]*<.+\.h>)
 	else{
 		//printf("Token: ID \"%s\"\n",yytext);
 		strcpy(yylval.nd_obj.name,(yytext));
-		insert(yytext, strlen(yytext), 0, line);
+		insert(yytext, strlen(yytext), 0, "ID", line);
 		yylval.nd_obj.symtab_item = lookup(yytext);
 		return ID;
 	}
@@ -124,38 +123,39 @@ INCLUDE ("#include"[ ]*<.+\.h>)
 
 {STR} 			 	{	strcpy(yylval.nd_obj.name,(yytext));
 						yylval.nd_obj.type = STR_TYPE;
-						insert(yytext, strlen(yytext), 3, line); return STR; }
+						insert(yytext, strlen(yytext), 3, "StringVar", line);
+						return STR; }
 {INTEGER}		 	{ strcpy(yylval.nd_obj.name,(yytext));
-					  insert(yytext, strlen(yytext), 1, line);
+					  insert(yytext, strlen(yytext), 1, "IntVar",line);
 					  yylval.nd_obj.type = INT_TYPE;
 					  return INTEGER; }
 {REAL}			 	{ strcpy(yylval.nd_obj.name,(yytext));
-					  insert(yytext, strlen(yytext), 2, line);
+					  insert(yytext, strlen(yytext), 2, "RealVar",line);
 					  yylval.nd_obj.type = REAL_TYPE;
 					  return REAL; }
-{CHARACTER}			{ strcpy(yylval.nd_obj.name,(yytext)); insert(yytext, strlen(yytext), 1, line); return CHARACTER; }
-{INCLUDE}		 	{ insert(yytext, strlen(yytext), 0, line); strcpy(yylval.nd_obj.name,(yytext)); return INCLUDE; }
-{A_CHAVES}       	{ insert(yytext, strlen(yytext), 0, line); return A_CHAVES; }
-{A_COLCHETES}    	{ insert(yytext, strlen(yytext), 0, line); return A_COLCHETES; }
-{A_PARENTESES}   	{ insert(yytext, strlen(yytext), 0, line); return A_PARENTESES; }
-{F_CHAVES}       	{ insert(yytext, strlen(yytext), 0, line); return F_CHAVES; }
-{F_COLCHETES}    	{ insert(yytext, strlen(yytext), 0, line); return F_COLCHETES; }
-{F_PARENTESES}   	{ insert(yytext, strlen(yytext), 0, line); return F_PARENTESES; }
-{DOIS_PONTOS}       { insert(yytext, strlen(yytext), 0, line); return DOIS_PONTOS;}
-{PONTO_VIRG}        { insert(yytext, strlen(yytext), 0, line); return PONTO_VIRG;}
-{VIRG}              { insert(yytext, strlen(yytext), 0, line); return VIRG; }
-{PONTO}             { insert(yytext, strlen(yytext), 0, line); return PONTO; }
-{IGUAL}             { insert(yytext, strlen(yytext), 0, line); return IGUAL; }
-{ATRIB}             { insert(yytext, strlen(yytext), 0, line); return ATRIB; }
-{INCR}				{ insert(yytext, strlen(yytext), 0, line); return INCR; }
-{SOMA}              { insert(yytext, strlen(yytext), 0, line); return SOMA; }
-{SUB}               { insert(yytext, strlen(yytext), 0, line); return SUB; }
-{MULT}              { insert(yytext, strlen(yytext), 0, line); return MULT; }
-{DIV}               { insert(yytext, strlen(yytext), 0, line); return DIV; }
-{AND}               { insert(yytext, strlen(yytext), 0, line); return AND; }
-{OR}                { insert(yytext, strlen(yytext), 0, line); return OR; }
-{NOT}               { insert(yytext, strlen(yytext), 0, line); return NOT;}
-{COMP}              { insert(yytext, strlen(yytext), 0, line); return COMP; }
+{CHARACTER}			{ strcpy(yylval.nd_obj.name,(yytext)); insert(yytext, strlen(yytext), 1, "CharVar" ,line); return CHARACTER; }
+{INCLUDE}		 	{ insert(yytext, strlen(yytext), 0, "Header" ,line); strcpy(yylval.nd_obj.name,(yytext)); return INCLUDE; }
+{A_CHAVES}       	{ insert(yytext, strlen(yytext), 0, "Chaves" ,line); return A_CHAVES; }
+{A_COLCHETES}    	{ insert(yytext, strlen(yytext), 0, "Colchetes" ,line); return A_COLCHETES; }
+{A_PARENTESES}   	{ insert(yytext, strlen(yytext), 0, "Parenteses" ,line); return A_PARENTESES; }
+{F_CHAVES}       	{ insert(yytext, strlen(yytext), 0, "Chaves" ,line); return F_CHAVES; }
+{F_COLCHETES}    	{ insert(yytext, strlen(yytext), 0, "Colchetes" ,line); return F_COLCHETES; }
+{F_PARENTESES}   	{ insert(yytext, strlen(yytext), 0, "Parenteses" ,line); return F_PARENTESES; }
+{DOIS_PONTOS}       { insert(yytext, strlen(yytext), 0, "DoisPontos" ,line); return DOIS_PONTOS;}
+{PONTO_VIRG}        { insert(yytext, strlen(yytext), 0, "PontoVirgula" ,line); return PONTO_VIRG;}
+{VIRG}              { insert(yytext, strlen(yytext), 0, "Virgula" ,line); return VIRG; }
+{PONTO}             { insert(yytext, strlen(yytext), 0, "Ponto" ,line); return PONTO; }
+{IGUAL}             { insert(yytext, strlen(yytext), 0, "TokIgualdade" ,line); return IGUAL; }
+{ATRIB}             { insert(yytext, strlen(yytext), 0, "TokAtribuicao" ,line); return ATRIB; }
+{INCR}				{ insert(yytext, strlen(yytext), 0, "Incremento" ,line); return INCR; }
+{SOMA}              { insert(yytext, strlen(yytext), 0, "Mais" ,line); return SOMA; }
+{SUB}               { insert(yytext, strlen(yytext), 0, "Menos" ,line); return SUB; }
+{MULT}              { insert(yytext, strlen(yytext), 0, "Multiplicacao" ,line); return MULT; }
+{DIV}               { insert(yytext, strlen(yytext), 0, "Divisao" ,line); return DIV; }
+{AND}               { insert(yytext, strlen(yytext), 0, "And" ,line); return AND; }
+{OR}                { insert(yytext, strlen(yytext), 0, "Or" ,line); return OR; }
+{NOT}               { insert(yytext, strlen(yytext), 0, "Not" ,line); return NOT;}
+{COMP}              { insert(yytext, strlen(yytext), 0, "Comparador" ,line); return COMP; }
 
 "\n" {++line;}
 
