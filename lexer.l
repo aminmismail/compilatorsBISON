@@ -125,10 +125,12 @@ INCLUDE ("#include"[ ]*<.+\.h>)
 {STR} 			 	{	strcpy(yylval.nd_obj.name,(yytext));
 						yylval.nd_obj.type = STR_TYPE;
 						insert(yytext, strlen(yytext), 3, line); return STR; }
-{INTEGER}		 	{ strcpy(yylval.nd_obj.name,(yytext)); insert(yytext, strlen(yytext), 1, line);
+{INTEGER}		 	{ strcpy(yylval.nd_obj.name,(yytext));
+					  insert(yytext, strlen(yytext), 1, line);
 					  yylval.nd_obj.type = INT_TYPE;
 					  return INTEGER; }
-{REAL}			 	{ strcpy(yylval.nd_obj.name,(yytext)); insert(yytext, strlen(yytext), 2, line);
+{REAL}			 	{ strcpy(yylval.nd_obj.name,(yytext));
+					  insert(yytext, strlen(yytext), 2, line);
 					  yylval.nd_obj.type = REAL_TYPE;
 					  return REAL; }
 {CHARACTER}			{ strcpy(yylval.nd_obj.name,(yytext)); insert(yytext, strlen(yytext), 1, line); return CHARACTER; }

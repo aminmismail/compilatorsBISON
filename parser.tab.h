@@ -91,7 +91,7 @@ typedef union YYSTYPE
 #line 17 ".\\parser.y"
 
     struct var_name { 
-			char name[100]; 
+			char name[100];
 			struct node* nd;
 			int type;
 			list_t* symtab_item;

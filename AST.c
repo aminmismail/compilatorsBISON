@@ -10,6 +10,11 @@ struct node* mknode(struct node *left, struct node *right, char *token) {
 	return(newnode);
 }
 
+struct node* mkerrnode(struct node *left, struct node *right) {	
+	struct node *newnode = mknode(left,right,"_ERROR_");
+	return(newnode);
+}
+
 void printtree(struct node* tree) {
 	printf("\n\n Inorder traversal of the Parse Tree: \n\n");
 	printInorder(tree);

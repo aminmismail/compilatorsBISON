@@ -16,7 +16,7 @@
 /* YYSTYPE*/
 %union{
     struct var_name { 
-			char name[100]; 
+			char name[100];
 			struct node* nd;
 			int type;
 			list_t* symtab_item;
@@ -56,7 +56,7 @@ main: tipo var A_PARENTESES F_PARENTESES A_CHAVES mainfun retorno F_CHAVES {
 	$$.nd = mknode($6.nd, $7.nd, $2.name);
 }
 
-retorno: RETURN var PONTO_VIRG{
+retorno: RETURN exp PONTO_VIRG{
 	$$.nd = mknode(NULL, $2.nd, "return");
 }
 
@@ -85,7 +85,6 @@ tipo: INT 		{ $$.type = 1 ; $$.nd = mknode(NULL, NULL, "int"); }
 	| STRING	{ $$.type = 3 ; $$.nd = mknode(NULL, NULL, "string"); };
 
 var: ID { 
-	strcpy($$.name, $1.name);
 	$$.nd = mknode(NULL, NULL, $1.name);
 };
 
@@ -104,10 +103,10 @@ else_part: ELSE corpo 							{ $$.nd = mknode($1.nd, NULL, "else"); }
 	| /* vazio */ 	 							{ $$.nd = NULL; } ;
 
 for_decl: FOR A_PARENTESES atribuicao exp PONTO_VIRG exp F_PARENTESES corpo {
-	struct node* conds = mknode($4.nd,$6.nd,"cond");
+	struct node* conds = mknode($4.nd,$6.nd,"conds");
 	struct node* inicio = mknode($3.nd, NULL, "inicio");
-
-	$$.nd = mknode(temp, inicio, "for");
+	struct node* fornode = mknode(inicio, conds, "forhead");
+	$$.nd = mknode(fornode, $8.nd, "for");
 } ;
 
 while_decl: WHILE A_PARENTESES exp F_PARENTESES corpo {
@@ -115,11 +114,38 @@ while_decl: WHILE A_PARENTESES exp F_PARENTESES corpo {
 } ;
 
 corpo: decl  						{ $$.nd = mknode($1.nd, NULL, "corpo_decl_unic"); }
-	| A_CHAVES decls F_CHAVES		{ $$.nd = mknode($1.nd, NULL, "corpo_mult_decls"); } ;
+	| A_CHAVES decls F_CHAVES		{ $$.nd = mknode($2.nd, NULL, "corpo_mult_decls"); } ;
 
 exp:
-    exp SOMA exp	{$$.nd = mknode($1.nd, $3.nd, "+")}		|
-    exp MULT exp 	{$$.nd = mknode($1.nd, $3.nd, "*")}		|
+    exp SOMA exp {
+		if(($1.type == 1 || 4) && ($3.type == 1 || $3.type == 4)){
+			$$.type = 1;
+			$$.nd = mknode($1.nd, $3.nd, "+");
+		}
+		else if(($1.type == 1 || $1.type == 2) && ($3.type == 1 || $3.type == 2)){
+			$$.type = 2;
+			$$.nd = mknode($1.nd, $3.nd, "+");
+		}
+		else{
+			printf("Tipo incompativel em expressao na linha %d\n", line);
+			$$.nd = mkerrnode($1.nd, $3.nd);
+		}
+	} |
+    exp MULT exp 	{
+		if(($1.type == 1 ) && $3.type == 1){
+			$$.type = 1;
+			$$.nd = mknode($1.nd, $3.nd, "*");
+		}
+		else if(($1.type == 1 || $1.type == 2) && ($3.type == 1 || $3.type == 2)){
+			$$.type = 2;
+			$$.nd = mknode($1.nd, $3.nd, "*");
+		}
+		else{
+			printf("Tipo incompativel em expressao na linha %d\n", line);
+			$$.nd = mkerrnode($1.nd, $3.nd);
+		}
+		$$.nd = mknode($1.nd, $3.nd, "*")
+	} |
     exp DIV exp  	{$$.nd = mknode($1.nd, $3.nd, "/")}		|
     exp INCR 	 	{ $$.nd = mknode($1.nd, NULL, "++")}	|
     INCR exp     	{$$.nd = mknode(NULL, $1.nd, "++")}		|
@@ -129,35 +155,55 @@ exp:
     exp IGUAL exp 	{$$.nd = mknode($1.nd, $3.nd, "==")}	|
     exp COMP exp 	{$$.nd = mknode($1.nd, $3.nd, "comp")}	|
     A_PARENTESES exp F_PARENTESES {$$.nd = mknode(NULL, $2.nd, "(exp)")}|
-    var 			{$$.nd = mknode($1.nd, NULL, "var")}	|
-	constval		{$$.nd = mknode($1.nd, NULL, "constval")}
+    var {
+		$$.nd = mknode($1.nd, NULL, "var");
+		$$.type = $1.type;
+	} |
+	constval {
+		$$.nd = mknode($1.nd, NULL, "constval");
+		$$.type = $1.type;
+	}
 ;
 
 constval:
 	INTEGER {
-		{$$.nd = mknode(NULL, NULL, "int"); }
+		struct node* temp = mknode(NULL, NULL, $1.name);
+		$$.nd = mknode(temp, NULL, "intconst");
+		$$.type = 1;
 	}
 	| 
 	REAL {
-		$$.nd = mknode(NULL, NULL, "real"); }
+		struct node* temp = mknode(NULL, NULL, $1.name);
+		$$.nd = mknode(temp, NULL, "realconst");
+		$$.type = 2;
+	}
 	|
 	CHAR {
-		$$.nd = mknode(NULL, NULL, "char"); }
+		struct node* temp = mknode(NULL, NULL, $1.name);
+		$$.nd = mknode(temp, NULL, "charconst");
+		$$.type = 1;
+	}
 	| 
 	STR{
-		$$.nd = mknode(NULL, NULL, "string") ;
+		struct node* temp = mknode(NULL, NULL, $1.name);
+		$$.nd = mknode(temp, NULL, "stringconst");
+		$$.type = 3;
 	}
 ;
 
 
 atribuicao: var ATRIB exp PONTO_VIRG {
-	$$.nd = mknode($1.nd, $3.nd, "=")
+	$$.nd = mknode($1.nd, $3.nd, "=");
+	if($1.type == 1){
+		if($3.type == 1 || $3.type == 4) $$.type = 1;
+		else printf("Tipos de valores incompatíveis na linha %d\n", line);
 	} 
+	
+}
 
 %%
 
-void yyerror ()
-{
+void yyerror (){
   fprintf(stderr, "Erro de sintaxe na linha %d\n", line);
 }
 

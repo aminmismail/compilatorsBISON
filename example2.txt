@@ -1,12 +1,11 @@
-#include<header.h>
-
+#include <stdio.h>
+#include <stdlib.h>
 int main(){
-    int i;
-    int v;
-    int t;
-    for(i = 0; i < 30; i++){
-        v = 2;
-        t =  v+1;
-    }
-    return v;
+  int x;
+  int y;
+  int z;
+  x = 1;
+  y = 2;
+  z = x + y;
+return 0;
 }
