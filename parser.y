@@ -48,30 +48,35 @@
 %%
 
 programa: headers main {
-	$$.nd = mknode(NULL, $2.nd, "program");
+	$$.nd = mknode($1.nd, $2.nd, "programa");
 	head = $$.nd;
 };
 
-main: tipo ID A_PARENTESES F_PARENTESES A_CHAVES mainfun F_CHAVES { 
-	$$.nd = mknode($2.nd, $6.nd, "main"); 
+main: tipo var A_PARENTESES F_PARENTESES A_CHAVES mainfun retorno F_CHAVES {
+	$$.nd = mknode($6.nd, $7.nd, $2.name);
 }
 
-retorno: RETURN ID 
+retorno: RETURN var PONTO_VIRG{
+	$$.nd = mknode(NULL, $2.nd, "return");
+}
 
-mainfun: defs decls retorno PONTO_VIRG
+mainfun: defs decls {
+	$$.nd = mknode($1.nd, $2.nd, "mainfun");
+}
 
 headers: headers headers
 	| INCLUDE;
 
-defs: defs def
-	| def;
+defs: defs def 	{ $$.nd = mknode($1.nd, $2.nd, "defs"); }
+	| def		{ $$.nd = mknode($1.nd, NULL, "def"); } 
 
-def: tipo var {
+def: tipo var PONTO_VIRG {
 	if(lookup($2.name)->st_type != 0){
 		printf("Erro: Redefinicao na linha %d\n", line);
 	}
 	set_type($2.name, $1.type);
-} PONTO_VIRG ;
+	$$.nd = mknode($1.nd, $2.nd, "=");
+} ;
 
 tipo: INT 		{ $$.type = 1 ; } 
 	| CHAR  	{ $$.type = 1 ; }
@@ -91,7 +96,6 @@ decl: if_decl
 	| for_decl
 	| while_decl
 	| atribuicao
-	| RETURN PONTO_VIRG
 ;
 
 if_decl: IF A_PARENTESES exp F_PARENTESES corpo else_part ;

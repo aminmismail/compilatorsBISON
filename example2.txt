@@ -1,0 +1,14 @@
+#include<kk.h>
+
+int main(){
+    int i;
+    string str;
+    double val;
+    char c;
+    str = "adad";
+    c = 55;
+    val = 8.2;
+    val = i+i;
+    res = val + 2.5;
+    return res;
+}
