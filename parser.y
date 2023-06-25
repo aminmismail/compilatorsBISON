@@ -216,8 +216,11 @@ int main(int argc, char *argv[]) {
  	yyout = fopen("symtab_dump.txt", "w");
 	symtab_dump(yyout);
  	fclose(yyout);
+	yyout = fopen("tree.txt", "w");
+	printTree(yyout, head);
+	fclose(yyout);
  }
  else printf("Execute com um arquivo! Exemplo: a.exe nomedoarquivo.txt\n");
- print_tree_util(head, 0);
+ 
  return 0;
 }

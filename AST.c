@@ -15,72 +15,31 @@ struct node* mkerrnode(struct node *left, struct node *right) {
 	return(newnode);
 }
 
-void printtree(struct node* tree) {
-	printf("\n\n Inorder traversal of the Parse Tree: \n\n");
-	printInorder(tree);
-	printf("\n\n");
-}
-
-void printInorder(struct node *tree) {
-	int i;
-	if (tree->left) {
-		printInorder(tree->left);
-	}
-	printf("%s, ", tree->token);
-	if (tree->right) {
-		printInorder(tree->right);
-	}
-}
-
-int getLevelCount(struct node* tree){
-    if (tree == NULL)
-    {
-        return 0;
-    }
-    int leftMaxLevel = 1 + getLevelCount(tree->left);
-    int rightMaxLevel = 1 + getLevelCount(tree->right);
-    if (leftMaxLevel > rightMaxLevel)
-    {
-        return leftMaxLevel;
-    }
-    else
-    {
-        return rightMaxLevel;
-    }
-}
-
-void printLevel(struct node *tree, int level)
-{
-    if (tree != NULL && level == 0)
-    {
-        printf("%s ", tree->token);
-    }   
-    else if (tree != NULL)
-    {
-        printLevel(tree->left, level - 1);
-        printLevel(tree->right, level - 1);
-    }
-}
-
-void printElements(struct node* tree)
-{
+void printAux(FILE* of, struct node* node, int n, int child){
     int i;
-    int levelCount = getLevelCount(tree);
-    for (i = 0; i < levelCount; i++){
-        printLevel(tree, i);
-		printf("\n");
+    for(i = 0; i < n; i++){
+        if(i == n-1 && child == 0){
+            fprintf(of, " \u251c", 192);
+        }
+        else if(i == n-1 && child == 1){
+            fprintf(of, " \u2515", 195);
+        }
+        else{
+            fprintf(of, " | ");
+        }
     }
+
+    fprintf(of,"%s\n", node->token);
+
+    if(node->left != NULL)
+        printAux(of, node->left, n+1, 0);
+    if(node->right != NULL)
+        printAux(of, node->right, n+1, 1);
 }
 
-void print_tree_util(struct node *root, int space) {
-    if(root == NULL)
-        return;
-    space += 7;
-    print_tree_util(root->right, space);
-    for (int i = 7; i < space; i++)
-        printf(" ");
-    printf("(%d) %s\n", space/7, root->token);
-    print_tree_util(root->left, space);
+void printTree(FILE* of, struct node* node){
+    fprintf(of,"| | | ARVORE SINTATICA | | |\n");
+    printAux(of, node, 0, 0);
 }
 
 

@@ -1,0 +1,46 @@
+| | | ARVORE SINTATICA | | |
+programa
+ ├headers
+ |  ├#include <stdio.h>
+ |  ┕#include <stdlib.h>
+ ┕main
+ |  ├mainfun
+ |  |  ├defs
+ |  |  |  ├defs
+ |  |  |  |  ├def
+ |  |  |  |  |  ├definicao
+ |  |  |  |  |  |  ├int
+ |  |  |  |  |  |  ┕x
+ |  |  |  |  ┕definicao
+ |  |  |  |  |  ├int
+ |  |  |  |  |  ┕y
+ |  |  |  ┕definicao
+ |  |  |  |  ├int
+ |  |  |  |  ┕z
+ |  |  ┕decls
+ |  |  |  ├decls
+ |  |  |  |  ├decl
+ |  |  |  |  |  ├atrib_decl
+ |  |  |  |  |  |  ├=
+ |  |  |  |  |  |  |  ├x
+ |  |  |  |  |  |  |  ┕constval
+ |  |  |  |  |  |  |  |  ├intconst
+ |  |  |  |  |  |  |  |  |  ├1
+ |  |  |  |  ┕atrib_decl
+ |  |  |  |  |  ├=
+ |  |  |  |  |  |  ├y
+ |  |  |  |  |  |  ┕constval
+ |  |  |  |  |  |  |  ├intconst
+ |  |  |  |  |  |  |  |  ├2
+ |  |  |  ┕atrib_decl
+ |  |  |  |  ├=
+ |  |  |  |  |  ├z
+ |  |  |  |  |  ┕+
+ |  |  |  |  |  |  ├var
+ |  |  |  |  |  |  |  ├x
+ |  |  |  |  |  |  ┕var
+ |  |  |  |  |  |  |  ├y
+ |  ┕return
+ |  |  ┕constval
+ |  |  |  ├intconst
+ |  |  |  |  ├0

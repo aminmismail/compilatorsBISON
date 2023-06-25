@@ -11,7 +11,4 @@ struct node {
 
 struct node* mknode(struct node *left, struct node *right, char *token);
 struct node* mkerrnode(struct node *left, struct node *right);
-void printtree(struct node* tree);
-void printInorder(struct node *tree);
-void printElements(struct node* tree);
-void print_tree_util(struct node *root, int space);
+void printTree(FILE* of, struct node* node);
