@@ -8,31 +8,33 @@ Inserido '{' pela primeira vez na linha: 3
 Encontrado 'int' novamente na linha: 4
 Inserido 'x' pela primeira vez na linha: 4
 Inserido ';' pela primeira vez na linha: 4
-Encontrado 'int' novamente na linha: 5
-Inserido 'y' pela primeira vez na linha: 5
+Alterado o tipo de x para int
+Encontrado 'x' novamente na linha: 5
+Inserido '=' pela primeira vez na linha: 5
+Inserido '1' pela primeira vez na linha: 5
 Encontrado ';' novamente na linha: 5
+Alterado o tipo de x para int
+Inserido 'if' pela primeira vez na linha: 6
+Encontrado '(' novamente na linha: 6
 Encontrado 'x' novamente na linha: 6
-Inserido '=' pela primeira vez na linha: 6
-Inserido '0' pela primeira vez na linha: 6
-Encontrado ';' novamente na linha: 6
-Inserido 'while' pela primeira vez na linha: 7
-Encontrado '(' novamente na linha: 7
+Inserido '==' pela primeira vez na linha: 6
+Encontrado '1' novamente na linha: 6
+Encontrado ')' novamente na linha: 6
 Encontrado 'x' novamente na linha: 7
-Inserido '<' pela primeira vez na linha: 7
-Inserido '5' pela primeira vez na linha: 7
-Encontrado ')' novamente na linha: 7
-Encontrado '{' novamente na linha: 7
-Encontrado 'x' novamente na linha: 8
-Encontrado '=' novamente na linha: 8
-Inserido '3' pela primeira vez na linha: 8
-Encontrado ';' novamente na linha: 8
-Inserido '}' pela primeira vez na linha: 9
-Encontrado 'y' novamente na linha: 10
-Encontrado '=' novamente na linha: 10
-Inserido '+' pela primeira vez na linha: 10
-Encontrado '3' novamente na linha: 10
-Encontrado ';' novamente na linha: 10
+Encontrado '=' novamente na linha: 7
+Inserido '2' pela primeira vez na linha: 7
+Encontrado ';' novamente na linha: 7
+Alterado o tipo de x para int
+Inserido 'else' pela primeira vez na linha: 8
+Encontrado '{' novamente na linha: 8
+Encontrado 'x' novamente na linha: 9
+Encontrado '=' novamente na linha: 9
+Encontrado '1' novamente na linha: 9
+Inserido '+' pela primeira vez na linha: 9
+Inserido '1.1' pela primeira vez na linha: 9
+Encontrado ';' novamente na linha: 9
+Inserido '}' pela primeira vez na linha: 10
 Inserido 'return' pela primeira vez na linha: 11
-Encontrado 'x' novamente na linha: 11
+Inserido '5' pela primeira vez na linha: 11
 Encontrado ';' novamente na linha: 11
 Encontrado '}' novamente na linha: 12

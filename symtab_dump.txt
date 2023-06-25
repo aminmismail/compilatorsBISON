@@ -1,22 +1,23 @@
 ------------------------- -------------- ---------- ------------
 Cadeia                    Token          Tipo       Linhas
 ------------------------- -------------- ---------- -------------
+else                      else           Keyword      8 
 #include <stdlib.h>       HEADER         undef        2 
 return                    return         Keyword     11 
-(                         A_PARENTESES   undef        3    7 
-)                         F_PARENTESES   undef        3    7 
-+                         SOMA           undef       10 
-0                         INTEGER        int          6 
-3                         INTEGER        int          8   10 
-5                         INTEGER        int          7 
-;                         PONTO_VIRG     undef        4    5    6    8   10   11 
-<                         COMP           undef        7 
-=                         ATRIB          undef        6    8   10 
-while                     while          Keyword      7 
-x                         ID             int          4    6    7    8   11 
-int                       int            Keyword      3    4    5 
-y                         ID             int          5   10 
-{                         A_CHAVES       undef        3    7 
-}                         F_CHAVES       undef        9   12 
+(                         A_PARENTESES   undef        3    6 
+)                         F_PARENTESES   undef        3    6 
++                         SOMA           undef        9 
+1                         INTEGER        int          5    6    9 
+2                         INTEGER        int          7 
+5                         INTEGER        int         11 
+;                         PONTO_VIRG     undef        4    5    7    9   11 
+=                         ATRIB          undef        5    7    9 
+x                         ID             int          4    5    6    7    9 
+int                       int            Keyword      3    4 
+==                        IGUAL          undef        6 
+{                         A_CHAVES       undef        3    8 
+}                         F_CHAVES       undef       10   12 
+1.1                       REAL           real         9 
 #include <stdio.h>        HEADER         undef        1 
+if                        if             Keyword      6 
 main                      ID             undef        3 

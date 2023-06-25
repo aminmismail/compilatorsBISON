@@ -114,7 +114,11 @@ void symtab_dump(FILE * of){
 void set_type(char *name, int st_type){
 	/* lookup entry */
 	list_t *l = lookup(name);
-
+	fprintf(symtabLog, "Alterado o tipo de %s para ", name);
+	if (st_type == INT_TYPE) fprintf(symtabLog, "int\n");
+	else if (st_type == REAL_TYPE) fprintf(symtabLog, "real\n");
+	else if (st_type == STR_TYPE) fprintf(symtabLog, "String\n");
+	
 	/* set "main" type */
 	l->st_type = st_type;
 

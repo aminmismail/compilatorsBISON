@@ -493,8 +493,8 @@ static const yytype_uint8 yyrline[] =
        0,    51,    51,    56,    60,    64,    68,    69,    71,    72,
       74,    82,    83,    84,    85,    86,    88,    92,    93,    95,
       96,    97,    98,   101,   103,   104,   106,   113,   117,   118,
-     121,   135,   150,   151,   152,   153,   154,   155,   156,   157,
-     158,   159,   163,   170,   176,   182,   188,   196,   202
+     121,   132,   143,   154,   155,   156,   167,   178,   179,   190,
+     201,   202,   206,   213,   219,   225,   231,   239,   250
 };
 #endif
 
@@ -1706,17 +1706,14 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 121 ".\\parser.y"
     {
-		if(((yyvsp[(1) - (3)].nd_obj).type == 1 || 4) && ((yyvsp[(3) - (3)].nd_obj).type == 1 || (yyvsp[(3) - (3)].nd_obj).type == 4)){
-			(yyval.nd_obj).type = 1;
+		if((yyvsp[(1) - (3)].nd_obj).type == (yyvsp[(3) - (3)].nd_obj).type){
 			(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "+");
-		}
-		else if(((yyvsp[(1) - (3)].nd_obj).type == 1 || (yyvsp[(1) - (3)].nd_obj).type == 2) && ((yyvsp[(3) - (3)].nd_obj).type == 1 || (yyvsp[(3) - (3)].nd_obj).type == 2)){
-			(yyval.nd_obj).type = 2;
-			(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "+");
+			(yyval.nd_obj).type = (yyvsp[(1) - (3)].nd_obj).type;
 		}
 		else{
 			printf("Tipo incompativel em expressao na linha %d\n", line);
 			(yyval.nd_obj).nd = mkerrnode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd);
+			(yyval.nd_obj).type = 0;
 		}
 	;}
     break;
@@ -1724,91 +1721,137 @@ yyreduce:
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 135 ".\\parser.y"
+#line 132 ".\\parser.y"
     {
-		if(((yyvsp[(1) - (3)].nd_obj).type == 1 ) && (yyvsp[(3) - (3)].nd_obj).type == 1){
-			(yyval.nd_obj).type = 1;
-			(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "*");
-		}
-		else if(((yyvsp[(1) - (3)].nd_obj).type == 1 || (yyvsp[(1) - (3)].nd_obj).type == 2) && ((yyvsp[(3) - (3)].nd_obj).type == 1 || (yyvsp[(3) - (3)].nd_obj).type == 2)){
-			(yyval.nd_obj).type = 2;
+		if((yyvsp[(1) - (3)].nd_obj).type == (yyvsp[(3) - (3)].nd_obj).type){
+			(yyval.nd_obj).type = (yyvsp[(1) - (3)].nd_obj).type;
 			(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "*");
 		}
 		else{
 			printf("Tipo incompativel em expressao na linha %d\n", line);
 			(yyval.nd_obj).nd = mkerrnode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd);
+			(yyval.nd_obj).type = 0;
 		}
-		(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "*")
 	;}
     break;
 
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 150 ".\\parser.y"
-    {(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "/");}
+#line 143 ".\\parser.y"
+    {
+		if((yyvsp[(1) - (3)].nd_obj).type == (yyvsp[(3) - (3)].nd_obj).type){
+			(yyval.nd_obj).type = (yyvsp[(1) - (3)].nd_obj).type;
+			(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "/");
+		}
+		else{
+			printf("Tipo incompativel em expressao na linha %d\n", line);
+			(yyval.nd_obj).nd = mkerrnode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd);
+			(yyval.nd_obj).type = 0;
+		}
+	;}
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 151 ".\\parser.y"
+#line 154 ".\\parser.y"
     { (yyval.nd_obj).nd = mknode((yyvsp[(1) - (2)].nd_obj).nd, NULL, "++");}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 152 ".\\parser.y"
+#line 155 ".\\parser.y"
     {(yyval.nd_obj).nd = mknode(NULL, (yyvsp[(1) - (2)].nd_obj).nd, "++");}
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 153 ".\\parser.y"
-    {(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "||");}
+#line 156 ".\\parser.y"
+    {
+		if((yyvsp[(1) - (3)].nd_obj).type == (yyvsp[(3) - (3)].nd_obj).type){
+			(yyval.nd_obj).type = (yyvsp[(1) - (3)].nd_obj).type;
+			(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "||");
+		}
+		else{
+			printf("Tipo incompativel em expressao na linha %d\n", line);
+			(yyval.nd_obj).nd = mkerrnode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd);
+			(yyval.nd_obj).type = 0;
+		}
+	;}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 154 ".\\parser.y"
-    {(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "&&");}
+#line 167 ".\\parser.y"
+    {
+		if((yyvsp[(1) - (3)].nd_obj).type == (yyvsp[(3) - (3)].nd_obj).type){
+			(yyval.nd_obj).type = (yyvsp[(1) - (3)].nd_obj).type;
+			(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "&&");
+		}
+		else{
+			printf("Tipo incompativel em expressao na linha %d\n", line);
+			(yyval.nd_obj).nd = mkerrnode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd);
+			(yyval.nd_obj).type = 0;
+		}
+	;}
     break;
 
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 155 ".\\parser.y"
+#line 178 ".\\parser.y"
     {(yyval.nd_obj).nd = mknode(NULL, (yyvsp[(2) - (2)].nd_obj).nd, "!");}
     break;
 
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 156 ".\\parser.y"
-    {(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "==");}
+#line 179 ".\\parser.y"
+    {
+		if((yyvsp[(1) - (3)].nd_obj).type == (yyvsp[(3) - (3)].nd_obj).type){
+			(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "==");
+			(yyval.nd_obj).type = (yyvsp[(1) - (3)].nd_obj).type;
+		}
+		else{
+			printf("Tipo incompativel em expressao na linha %d\n", line);
+			(yyval.nd_obj).nd = mkerrnode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd);
+			(yyval.nd_obj).type = 0;
+		}
+	;}
     break;
 
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 157 ".\\parser.y"
-    {(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "comp");}
+#line 190 ".\\parser.y"
+    {
+		if((yyvsp[(1) - (3)].nd_obj).type == (yyvsp[(3) - (3)].nd_obj).type){
+			(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "comp");
+			(yyval.nd_obj).type = (yyvsp[(1) - (3)].nd_obj).type;
+		}
+		else{
+			printf("Tipo incompativel em expressao na linha %d\n", line);
+			(yyval.nd_obj).nd = mkerrnode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd);
+			(yyval.nd_obj).type = 0;
+		}
+	;}
     break;
 
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 158 ".\\parser.y"
+#line 201 ".\\parser.y"
     {(yyval.nd_obj).nd = mknode(NULL, (yyvsp[(2) - (3)].nd_obj).nd, "(exp)");}
     break;
 
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 159 ".\\parser.y"
+#line 202 ".\\parser.y"
     {
 		(yyval.nd_obj).nd = mknode((yyvsp[(1) - (1)].nd_obj).nd, NULL, "var");
 		(yyval.nd_obj).type = (yyvsp[(1) - (1)].nd_obj).type;
@@ -1818,7 +1861,7 @@ yyreduce:
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 163 ".\\parser.y"
+#line 206 ".\\parser.y"
     {
 		(yyval.nd_obj).nd = mknode((yyvsp[(1) - (1)].nd_obj).nd, NULL, "constval");
 		(yyval.nd_obj).type = (yyvsp[(1) - (1)].nd_obj).type;
@@ -1828,7 +1871,7 @@ yyreduce:
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 170 ".\\parser.y"
+#line 213 ".\\parser.y"
     {
 		struct node* temp = mknode(NULL, NULL, (yyvsp[(1) - (1)].nd_obj).name);
 		(yyval.nd_obj).nd = mknode(temp, NULL, "intconst");
@@ -1839,7 +1882,7 @@ yyreduce:
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 176 ".\\parser.y"
+#line 219 ".\\parser.y"
     {
 		struct node* temp = mknode(NULL, NULL, (yyvsp[(1) - (1)].nd_obj).name);
 		(yyval.nd_obj).nd = mknode(temp, NULL, "realconst");
@@ -1850,7 +1893,7 @@ yyreduce:
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 182 ".\\parser.y"
+#line 225 ".\\parser.y"
     {
 		struct node* temp = mknode(NULL, NULL, (yyvsp[(1) - (1)].nd_obj).name);
 		(yyval.nd_obj).nd = mknode(temp, NULL, "charconst");
@@ -1861,7 +1904,7 @@ yyreduce:
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 188 ".\\parser.y"
+#line 231 ".\\parser.y"
     {
 		struct node* temp = mknode(NULL, NULL, (yyvsp[(1) - (1)].nd_obj).name);
 		(yyval.nd_obj).nd = mknode(temp, NULL, "stringconst");
@@ -1872,27 +1915,32 @@ yyreduce:
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 196 ".\\parser.y"
+#line 239 ".\\parser.y"
     {
-	(yyval.nd_obj).nd = mknode((yyvsp[(1) - (4)].nd_obj).nd, (yyvsp[(3) - (4)].nd_obj).nd, "=");
-	if((yyvsp[(1) - (4)].nd_obj).type == 1){
-		if((yyvsp[(3) - (4)].nd_obj).type == 1 || (yyvsp[(3) - (4)].nd_obj).type == 4) (yyval.nd_obj).type = 1;
-		else printf("Tipos de valores incompatíveis na linha %d\n", line);
+	list_t* temp = lookup((yyvsp[(1) - (4)].nd_obj).name);
+	if(temp->st_type == (yyvsp[(3) - (4)].nd_obj).type){
+		(yyval.nd_obj).type = (yyvsp[(3) - (4)].nd_obj).type;
+		set_type(temp->st_name, (yyvsp[(3) - (4)].nd_obj).type);
+		(yyval.nd_obj).nd = mknode((yyvsp[(1) - (4)].nd_obj).nd, (yyvsp[(3) - (4)].nd_obj).nd, "=");
 	} 
+	else{
+		printf("Erro semantico: Atribuicao de tipo incompativel na linha %d\n", line);
+		(yyval.nd_obj).nd = mkerrnode(NULL,NULL);
+	}
 ;}
     break;
 
   case 48:
 
 /* Line 1455 of yacc.c  */
-#line 202 ".\\parser.y"
+#line 250 ".\\parser.y"
     { (yyval.nd_obj).nd = mkerrnode(NULL,NULL); printf("Erro sintatico: Expressao esperada na linha %d\n", line); yyerrok; yyclearin;  ;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1896 "parser.tab.c"
+#line 1944 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2104,7 +2152,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 205 ".\\parser.y"
+#line 253 ".\\parser.y"
 
 
 void yyerror (){

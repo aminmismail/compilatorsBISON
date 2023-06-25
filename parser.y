@@ -119,42 +119,85 @@ corpo: decl  						{ $$.nd = mknode($1.nd, NULL, "corpo_decl_unic"); }
 
 exp:
     exp SOMA exp {
-		if(($1.type == 1 || 4) && ($3.type == 1 || $3.type == 4)){
-			$$.type = 1;
+		if($1.type == $3.type){
 			$$.nd = mknode($1.nd, $3.nd, "+");
-		}
-		else if(($1.type == 1 || $1.type == 2) && ($3.type == 1 || $3.type == 2)){
-			$$.type = 2;
-			$$.nd = mknode($1.nd, $3.nd, "+");
+			$$.type = $1.type;
 		}
 		else{
 			printf("Tipo incompativel em expressao na linha %d\n", line);
 			$$.nd = mkerrnode($1.nd, $3.nd);
+			$$.type = 0;
 		}
 	} |
     exp MULT exp 	{
-		if(($1.type == 1 ) && $3.type == 1){
-			$$.type = 1;
-			$$.nd = mknode($1.nd, $3.nd, "*");
-		}
-		else if(($1.type == 1 || $1.type == 2) && ($3.type == 1 || $3.type == 2)){
-			$$.type = 2;
+		if($1.type == $3.type){
+			$$.type = $1.type;
 			$$.nd = mknode($1.nd, $3.nd, "*");
 		}
 		else{
 			printf("Tipo incompativel em expressao na linha %d\n", line);
 			$$.nd = mkerrnode($1.nd, $3.nd);
+			$$.type = 0;
 		}
-		$$.nd = mknode($1.nd, $3.nd, "*")
 	} |
-    exp DIV exp  	{$$.nd = mknode($1.nd, $3.nd, "/")}		|
-    exp INCR 	 	{ $$.nd = mknode($1.nd, NULL, "++")}	|
+    exp DIV exp  	{
+		if($1.type == $3.type){
+			$$.type = $1.type;
+			$$.nd = mknode($1.nd, $3.nd, "/");
+		}
+		else{
+			printf("Tipo incompativel em expressao na linha %d\n", line);
+			$$.nd = mkerrnode($1.nd, $3.nd);
+			$$.type = 0;
+		}
+	} |
+    exp INCR 	 	{ $$.nd = mknode($1.nd, NULL, "++")} |
     INCR exp     	{$$.nd = mknode(NULL, $1.nd, "++")}		|
-    exp OR exp 	 	{$$.nd = mknode($1.nd, $3.nd, "||")}	|
-    exp AND exp 	{$$.nd = mknode($1.nd, $3.nd, "&&")}	|
+    exp OR exp 	 	{
+		if($1.type == $3.type){
+			$$.type = $1.type;
+			$$.nd = mknode($1.nd, $3.nd, "||");
+		}
+		else{
+			printf("Tipo incompativel em expressao na linha %d\n", line);
+			$$.nd = mkerrnode($1.nd, $3.nd);
+			$$.type = 0;
+		}
+	} |
+    exp AND exp 	{
+		if($1.type == $3.type){
+			$$.type = $1.type;
+			$$.nd = mknode($1.nd, $3.nd, "&&");
+		}
+		else{
+			printf("Tipo incompativel em expressao na linha %d\n", line);
+			$$.nd = mkerrnode($1.nd, $3.nd);
+			$$.type = 0;
+		}
+	} |
     NOT exp 		{$$.nd = mknode(NULL, $2.nd, "!")}		|
-    exp IGUAL exp 	{$$.nd = mknode($1.nd, $3.nd, "==")}	|
-    exp COMP exp 	{$$.nd = mknode($1.nd, $3.nd, "comp")}	|
+    exp IGUAL exp 	{
+		if($1.type == $3.type){
+			$$.nd = mknode($1.nd, $3.nd, "==");
+			$$.type = $1.type;
+		}
+		else{
+			printf("Tipo incompativel em expressao na linha %d\n", line);
+			$$.nd = mkerrnode($1.nd, $3.nd);
+			$$.type = 0;
+		}
+	} |
+    exp COMP exp 	{
+		if($1.type == $3.type){
+			$$.nd = mknode($1.nd, $3.nd, "comp");
+			$$.type = $1.type;
+		}
+		else{
+			printf("Tipo incompativel em expressao na linha %d\n", line);
+			$$.nd = mkerrnode($1.nd, $3.nd);
+			$$.type = 0;
+		}
+	} |
     A_PARENTESES exp F_PARENTESES {$$.nd = mknode(NULL, $2.nd, "(exp)")}|
     var {
 		$$.nd = mknode($1.nd, NULL, "var");
@@ -194,11 +237,16 @@ constval:
 
 
 atribuicao: var ATRIB exp PONTO_VIRG {
-	$$.nd = mknode($1.nd, $3.nd, "=");
-	if($1.type == 1){
-		if($3.type == 1 || $3.type == 4) $$.type = 1;
-		else printf("Tipos de valores incompatíveis na linha %d\n", line);
+	list_t* temp = lookup($1.name);
+	if(temp->st_type == $3.type){
+		$$.type = $3.type;
+		set_type(temp->st_name, $3.type);
+		$$.nd = mknode($1.nd, $3.nd, "=");
 	} 
+	else{
+		printf("Erro semantico: Atribuicao de tipo incompativel na linha %d\n", line);
+		$$.nd = mkerrnode(NULL,NULL);
+	}
 } | error { $$.nd = mkerrnode(NULL,NULL); printf("Erro sintatico: Expressao esperada na linha %d\n", line); yyerrok; yyclearin;  }
 
 

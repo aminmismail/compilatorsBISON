@@ -5,47 +5,35 @@ programa
  |  ┕#include <stdlib.h>
  ┕main
  |  ├mainfun
- |  |  ├defs
- |  |  |  ├def
- |  |  |  |  ├definicao
- |  |  |  |  |  ├int
- |  |  |  |  |  ┕x
- |  |  |  ┕definicao
+ |  |  ├def
+ |  |  |  ├definicao
  |  |  |  |  ├int
- |  |  |  |  ┕y
+ |  |  |  |  ┕x
  |  |  ┕decls
- |  |  |  ├decls
- |  |  |  |  ├decls
- |  |  |  |  |  ├decls
- |  |  |  |  |  |  ├decl
- |  |  |  |  |  |  |  ├atrib_decl
- |  |  |  |  |  |  |  |  ├=
- |  |  |  |  |  |  |  |  |  ├x
- |  |  |  |  |  |  |  |  |  ┕constval
- |  |  |  |  |  |  |  |  |  |  ├intconst
- |  |  |  |  |  |  |  |  |  |  |  ├0
- |  |  |  |  |  |  ┕while_decl
- |  |  |  |  |  |  |  ├while
- |  |  |  |  |  |  |  |  ├comp
- |  |  |  |  |  |  |  |  |  ├var
- |  |  |  |  |  |  |  |  |  |  ├x
- |  |  |  |  |  |  |  |  |  ┕constval
- |  |  |  |  |  |  |  |  |  |  ├intconst
- |  |  |  |  |  |  |  |  |  |  |  ├5
- |  |  |  |  |  |  |  |  ┕corpo_mult_decls
- |  |  |  |  |  |  |  |  |  ├decl
- |  |  |  |  |  |  |  |  |  |  ├atrib_decl
- |  |  |  |  |  |  |  |  |  |  |  ├=
- |  |  |  |  |  |  |  |  |  |  |  |  ├x
- |  |  |  |  |  |  |  |  |  |  |  |  ┕constval
- |  |  |  |  |  |  |  |  |  |  |  |  |  ├intconst
- |  |  |  |  |  |  |  |  |  |  |  |  |  |  ├3
- |  |  |  |  |  ┕atrib_decl
- |  |  |  |  |  |  ├_ERROR_
- |  |  |  |  ┕atrib_decl
- |  |  |  |  |  ├_ERROR_
- |  |  |  ┕atrib_decl
- |  |  |  |  ├_ERROR_
+ |  |  |  ├decl
+ |  |  |  |  ├atrib_decl
+ |  |  |  |  |  ├=
+ |  |  |  |  |  |  ├x
+ |  |  |  |  |  |  ┕constval
+ |  |  |  |  |  |  |  ├intconst
+ |  |  |  |  |  |  |  |  ├1
+ |  |  |  ┕if_decl
+ |  |  |  |  ├if
+ |  |  |  |  |  ├==
+ |  |  |  |  |  |  ├var
+ |  |  |  |  |  |  |  ├x
+ |  |  |  |  |  |  ┕constval
+ |  |  |  |  |  |  |  ├intconst
+ |  |  |  |  |  |  |  |  ├1
+ |  |  |  |  |  ┕corpo_decl_unic
+ |  |  |  |  |  |  ├atrib_decl
+ |  |  |  |  |  |  |  ├=
+ |  |  |  |  |  |  |  |  ├x
+ |  |  |  |  |  |  |  |  ┕constval
+ |  |  |  |  |  |  |  |  |  ├intconst
+ |  |  |  |  |  |  |  |  |  |  ├2
+ |  |  |  |  ┕else
  |  ┕return
- |  |  ┕var
- |  |  |  ├x
+ |  |  ┕constval
+ |  |  |  ├intconst
+ |  |  |  |  ├5
