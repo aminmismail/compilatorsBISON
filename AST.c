@@ -79,7 +79,7 @@ void print_tree_util(struct node *root, int space) {
     print_tree_util(root->right, space);
     for (int i = 7; i < space; i++)
         printf(" ");
-    printf("%s\n", root->token);
+    printf("(%d) %s\n", space/7, root->token);
     print_tree_util(root->left, space);
 }
 
