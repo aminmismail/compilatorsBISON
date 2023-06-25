@@ -87,20 +87,6 @@ void symtab_dump(FILE * of){
 			else if (l->st_type == REAL_TYPE) fprintf(of,"%-7s","real");
 			else if (l->st_type == STR_TYPE) fprintf(of,"%-7s","string");
 			else if (l->st_type == KEYWORD) fprintf(of, "%-7s", "Keyword");
-			else if (l->st_type == ARRAY_TYPE){
-				fprintf(of,"array of ");
-				if (l->inf_type == INT_TYPE) 		   fprintf(of,"%-7s","int");
-				else if (l->inf_type  == REAL_TYPE)    fprintf(of,"%-7s","real");
-				else if (l->inf_type  == STR_TYPE) 	   fprintf(of,"%-7s","string");
-				else fprintf(of,"%-7s","undef");
-			}
-			else if (l->st_type == FUNCTION_TYPE){
-				fprintf(of,"%-7s %s","function returns ", "ty");
-				if (l->inf_type == INT_TYPE) 		   fprintf(of,"%-7s","int");
-				else if (l->inf_type  == REAL_TYPE)    fprintf(of,"%-7s","real");
-				else if (l->inf_type  == STR_TYPE) 	   fprintf(of,"%-7s","string");
-				else fprintf(of,"%-7s","undef");
-			}
 			else fprintf(of,"%-7s","undef"); // if UNDEF or 0
 			while (t != NULL){
 				fprintf(of,"%4d ",t->lineno);
@@ -129,9 +115,5 @@ int get_type(char *name){
 	/* if "simple" type */
 	if(l->st_type == INT_TYPE || l->st_type == REAL_TYPE){
 		return l->st_type;
-	}
-	/* if array, pointer or function */
-	else{
-		return l->inf_type;
 	}
 }

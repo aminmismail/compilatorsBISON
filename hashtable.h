@@ -22,16 +22,6 @@
 #define BY_VALUE 1
 #define BY_REFER 2
 
-
-/* Struct do parametro */
-typedef struct Param{
-	int par_type;
-	char param_name[MAXTOKENLEN];
-	// Valor
-	int ival; double fval; char *st_sval;
-	int passing; // value or reference
-}Param;
-
 /* Lista encadeada de referencias para cada variavel */
 typedef struct RefList{ 
     int lineno;
@@ -48,13 +38,6 @@ typedef struct list_t{
     int st_ival; double st_fval; char *st_sval;    // Valores
     // Tipo
     int st_type;
-    // Tipo para arrays e funcoes
-    int inf_type; 
-    int *i_vals; double *f_vals; char *s_vals;
-    int array_size;
-    // Parametros da funcao
-    Param *parameters;
-    int num_of_pars;
     // pointer to next item in the list
     struct list_t *next;
 }list_t;
