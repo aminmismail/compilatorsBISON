@@ -1,21 +1,21 @@
------------- ------ ------------
-Name         Type   Line Numbers
------------- ------ -------------
-#include <stdlib.h> undef     2 
-return       Keyword  10 
-(            undef     3 
-)            undef     3 
-+            undef     9 
-0            int      10 
-1            int       7 
-2            int       8 
-;            undef     4    5    6    7    8    9   10 
-=            undef     7    8    9 
-x            int       4    7    9 
-int          Keyword   3    4    5    6 
-y            int       5    8    9 
-z            int       6    9 
-{            undef     3 
-}            undef    11 
-#include <stdio.h> undef     1 
-main         undef     3 
+------------------------- -------------- ---------- ------------
+Cadeia                    Categoria      Tipo       Linhas
+------------------------- -------------- ---------- -------------
+#include <stdlib.h>       HEADER         undef        2 
+return                    return         Keyword     10 
+(                         A_PARENTESES   undef        3 
+)                         F_PARENTESES   undef        3 
++                         SOMA           undef        9 
+0                         INTEGER        int         10 
+1                         INTEGER        int          7 
+2                         INTEGER        int          8 
+;                         PONTO_VIRG     undef        4    5    6    7    8    9   10 
+=                         ATRIB          undef        7    8    9 
+x                         ID             int          4    7    9 
+int                       int            Keyword      3    4    5    6 
+y                         ID             int          5    8    9 
+z                         ID             int          6    9 
+{                         A_CHAVES       undef        3 
+}                         F_CHAVES       undef       11 
+#include <stdio.h>        HEADER         undef        1 
+main                      ID             undef        3 

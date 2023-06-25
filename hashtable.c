@@ -17,7 +17,7 @@ unsigned int hash(char *key){
 	return hashval % SIZE;
 }
 
-void insert(char *name, int len, int type, int lineno){
+void insert(char *name, int len, int type, char* cat, int lineno){
 	unsigned int hashval = hash(name);
 	list_t *l = hash_table[hashval];
 	
@@ -26,7 +26,8 @@ void insert(char *name, int len, int type, int lineno){
 	/* variable not yet in table */
 	if (l == NULL){
 		l = (list_t*) malloc(sizeof(list_t));
-		strncpy(l->st_name, name, len+1);  
+		strncpy(l->st_name, name, len+1);
+		strncpy(l->st_cat, cat, strlen(cat)+1);  
 		/* add to hashtable */
 		l->st_type = type;
 		l->scope = cur_scope;
@@ -35,7 +36,7 @@ void insert(char *name, int len, int type, int lineno){
 		l->lines->next = NULL;
 		l->next = hash_table[hashval];
 		hash_table[hashval] = l; 
-		//printf("Inserido '%s' pela primeira vez na linha: %d\n", name, lineno); // error checking
+		printf("Inserido '%s' pela primeira vez na linha: %d\n", name, lineno); // error checking
 	}
 	/* found in table, so just add line number */
 	else{
@@ -46,7 +47,7 @@ void insert(char *name, int len, int type, int lineno){
 		t->next = (RefList*) malloc(sizeof(RefList));
 		t->next->lineno = lineno;
 		t->next->next = NULL;
-		//printf("Encontrado '%s' novamente na linha: %d\n", name, lineno);
+		printf("Encontrado '%s' novamente na linha: %d\n", name, lineno);
 	}
 }
 
@@ -74,9 +75,9 @@ void incr_scope(){ /* go to next scope */
 /* print to stdout by default */ 
 void symtab_dump(FILE * of){  
   int i;
-  fprintf(of,"------------ --------- ------ ------------\n");
-  fprintf(of,"Cadeia       Categoria Tipo   Linhas\n");
-  fprintf(of,"------------ --------- ------ -------------\n");
+  fprintf(of,"------------------------- -------------- ---------- ------------\n");
+  fprintf(of,"Cadeia                    Categoria      Tipo       Linhas\n");
+  fprintf(of,"------------------------- -------------- ---------- -------------\n");
   for (i=0; i < SIZE; ++i){ 
 	if (hash_table[i] != NULL){ 
 		list_t *l = hash_table[i];
@@ -84,18 +85,17 @@ void symtab_dump(FILE * of){
 			RefList *t = l->lines;
 
 			//Printa a Cadeia
-			fprintf(of,"%-12s ",l->st_name);
+			fprintf(of,"%-25s ",l->st_name);
 
 			//Printa a Categoria
-			fprintf(of, "%-*s ", (9-strlen(l->st_cat)), l->st_cat);
-
+			fprintf(of, "%-14s ", l->st_cat);
 
 			//Printa o tipo
-			if (l->st_type == INT_TYPE) fprintf(of,"%-7s","int");
-			else if (l->st_type == REAL_TYPE) fprintf(of,"%-7s","real");
-			else if (l->st_type == STR_TYPE) fprintf(of,"%-7s","string");
-			else if (l->st_type == KEYWORD) fprintf(of, "%-7s", "Keyword");
-			else fprintf(of,"%-7s","undef"); // if UNDEF or 0
+			if (l->st_type == INT_TYPE) fprintf(of,"%-10s","int");
+			else if (l->st_type == REAL_TYPE) fprintf(of,"%-10s","real");
+			else if (l->st_type == STR_TYPE) fprintf(of,"%-10s","string");
+			else if (l->st_type == KEYWORD) fprintf(of, "%-10s", "Keyword");
+			else fprintf(of,"%-10s","undef"); // if UNDEF or 0
 
 			//Printa as linhas de referencia
 			while (t != NULL){

@@ -692,7 +692,7 @@ YY_RULE_SETUP
 #line 49 ".\\lexer.l\\"
 {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "while" ,line);
 	return WHILE;
 }
 	YY_BREAK
@@ -701,7 +701,7 @@ YY_RULE_SETUP
 #line 55 ".\\lexer.l\\"
 {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "for" ,line);
 	return FOR;
 }
 	YY_BREAK
@@ -710,7 +710,7 @@ YY_RULE_SETUP
 #line 61 ".\\lexer.l\\"
 {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "if" ,line);
 	return IF;
 }
 	YY_BREAK
@@ -719,7 +719,7 @@ YY_RULE_SETUP
 #line 67 ".\\lexer.l\\"
 {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "else" ,line);
 	return ELSE;
 }
 	YY_BREAK
@@ -728,7 +728,7 @@ YY_RULE_SETUP
 #line 73 ".\\lexer.l\\"
 {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "char", line);
 	return CHAR;
 }
 	YY_BREAK
@@ -738,7 +738,7 @@ YY_RULE_SETUP
 {
 	strcpy(yylval.nd_obj.name,(yytext));
 	//yylval.type = INT_TYPE;
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "int" ,line);
 	return INT;
 }
 	YY_BREAK
@@ -748,49 +748,48 @@ YY_RULE_SETUP
 {
 	strcpy(yylval.nd_obj.name,(yytext));
 	//yylval.type = REAL_TYPE;
-	insert(yytext, strlen(yytext), 7, line);
-	
+	insert(yytext, strlen(yytext), 7, "float", line);
 	return FLOAT;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 94 ".\\lexer.l\\"
+#line 93 ".\\lexer.l\\"
 {
 	strcpy(yylval.nd_obj.name,(yytext));
 	//yylval.type = REAL_TYPE;
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "double", line);
 	return DOUBLE;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 101 ".\\lexer.l\\"
+#line 100 ".\\lexer.l\\"
 {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "void" ,line);
 	return VOID;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 107 ".\\lexer.l\\"
+#line 106 ".\\lexer.l\\"
 {
 	strcpy(yylval.nd_obj.name,(yytext));
-	insert(yytext, strlen(yytext), 7, line);
+	insert(yytext, strlen(yytext), 7, "return" ,line);
 	return RETURN;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 113 ".\\lexer.l\\"
+#line 112 ".\\lexer.l\\"
 {
 	//printf("id encontrado\n");
 	if(strlen(yytext) > 20) printf("ERRO: Tamanho maximo de ID (20) excedido!\n");
 	else{
 		//printf("Token: ID \"%s\"\n",yytext);
 		strcpy(yylval.nd_obj.name,(yytext));
-		insert(yytext, strlen(yytext), 0, line);
+		insert(yytext, strlen(yytext), 0, "ID", line);
 		yylval.nd_obj.symtab_item = lookup(yytext);
 		return ID;
 	}
@@ -798,161 +797,164 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 125 ".\\lexer.l\\"
+#line 124 ".\\lexer.l\\"
 {	strcpy(yylval.nd_obj.name,(yytext));
 						yylval.nd_obj.type = STR_TYPE;
-						insert(yytext, strlen(yytext), 3, line); return STR; }
+						insert(yytext, strlen(yytext), 3, "STR", line);
+						return STR; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 128 ".\\lexer.l\\"
-{ strcpy(yylval.nd_obj.name,(yytext)); insert(yytext, strlen(yytext), 1, line);
+{ strcpy(yylval.nd_obj.name,(yytext));
+					  insert(yytext, strlen(yytext), 1, "INTEGER",line);
 					  yylval.nd_obj.type = INT_TYPE;
 					  return INTEGER; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 131 ".\\lexer.l\\"
-{ strcpy(yylval.nd_obj.name,(yytext)); insert(yytext, strlen(yytext), 2, line);
+#line 132 ".\\lexer.l\\"
+{ strcpy(yylval.nd_obj.name,(yytext));
+					  insert(yytext, strlen(yytext), 2, "REAL",line);
 					  yylval.nd_obj.type = REAL_TYPE;
 					  return REAL; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 134 ".\\lexer.l\\"
-{ strcpy(yylval.nd_obj.name,(yytext)); insert(yytext, strlen(yytext), 1, line); return CHARACTER; }
+#line 136 ".\\lexer.l\\"
+{ strcpy(yylval.nd_obj.name,(yytext)); insert(yytext, strlen(yytext), 1, "CHARACTER" ,line); return CHARACTER; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 135 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); strcpy(yylval.nd_obj.name,(yytext)); return INCLUDE; }
+#line 137 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "HEADER" ,line); strcpy(yylval.nd_obj.name,(yytext)); return INCLUDE; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 136 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return A_CHAVES; }
+#line 138 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "A_CHAVES" ,line); return A_CHAVES; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 137 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return A_COLCHETES; }
+#line 139 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "A_COLCHETES" ,line); return A_COLCHETES; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 138 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return A_PARENTESES; }
+#line 140 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "A_PARENTESES" ,line); return A_PARENTESES; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 139 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return F_CHAVES; }
+#line 141 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "F_CHAVES" ,line); return F_CHAVES; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 140 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return F_COLCHETES; }
+#line 142 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "F_COLCHETES" ,line); return F_COLCHETES; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 141 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return F_PARENTESES; }
+#line 143 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "F_PARENTESES" ,line); return F_PARENTESES; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 142 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return DOIS_PONTOS;}
+#line 144 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "DOIS_PONTOS" ,line); return DOIS_PONTOS;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 143 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return PONTO_VIRG;}
+#line 145 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "PONTO_VIRG" ,line); return PONTO_VIRG;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 144 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return VIRG; }
+#line 146 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "VIRG" ,line); return VIRG; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 145 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return PONTO; }
+#line 147 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "PONTO" ,line); return PONTO; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 146 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return IGUAL; }
+#line 148 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "IGUAL" ,line); return IGUAL; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 147 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return ATRIB; }
+#line 149 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "ATRIB" ,line); return ATRIB; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 148 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return INCR; }
+#line 150 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "INCR" ,line); return INCR; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 149 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return SOMA; }
+#line 151 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "SOMA" ,line); return SOMA; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 150 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return SUB; }
+#line 152 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "SUB" ,line); return SUB; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 151 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return MULT; }
+#line 153 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "MULT" ,line); return MULT; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 152 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return DIV; }
+#line 154 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "DIV" ,line); return DIV; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 153 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return AND; }
+#line 155 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "AND" ,line); return AND; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 154 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return OR; }
+#line 156 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "OR" ,line); return OR; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 155 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return NOT;}
+#line 157 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "NOT" ,line); return NOT;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 156 ".\\lexer.l\\"
-{ insert(yytext, strlen(yytext), 0, line); return COMP; }
+#line 158 ".\\lexer.l\\"
+{ insert(yytext, strlen(yytext), 0, "COMP" ,line); return COMP; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 158 ".\\lexer.l\\"
+#line 160 ".\\lexer.l\\"
 {++line;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 160 ".\\lexer.l\\"
+#line 162 ".\\lexer.l\\"
 {;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 162 ".\\lexer.l\\"
+#line 164 ".\\lexer.l\\"
 { printf("Token [%s] nao identificado na linha: %d\n", yytext, line);}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 164 ".\\lexer.l\\"
+#line 166 ".\\lexer.l\\"
 ECHO;
 	YY_BREAK
-#line 956 "lex.yy.c"
+#line 958 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1838,7 +1840,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 164 ".\\lexer.l\\"
+#line 166 ".\\lexer.l\\"
 
 int yywrap(){
 	return 1;

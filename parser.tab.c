@@ -490,10 +490,10 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    50,    50,    55,    59,    63,    67,    68,    70,    71,
-      73,    81,    82,    83,    84,    85,    87,    92,    93,    95,
-      96,    97,    98,   101,   103,   104,   106,   113,   117,   118,
-     121,   135,   150,   151,   152,   153,   154,   155,   156,   157,
-     158,   159,   163,   170,   176,   182,   188,   196
+      73,    81,    82,    83,    84,    85,    87,    91,    92,    94,
+      95,    96,    97,   100,   102,   103,   105,   112,   116,   117,
+     120,   134,   149,   150,   151,   152,   153,   154,   155,   156,
+     157,   158,   162,   169,   175,   181,   187,   195
 };
 #endif
 
@@ -1594,7 +1594,6 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 87 ".\\parser.y"
     { 
-	strcpy((yyval.nd_obj).name, (yyvsp[(1) - (1)].nd_obj).name);
 	(yyval.nd_obj).nd = mknode(NULL, NULL, (yyvsp[(1) - (1)].nd_obj).name);
 ;}
     break;
@@ -1602,70 +1601,70 @@ yyreduce:
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 92 ".\\parser.y"
+#line 91 ".\\parser.y"
     { (yyval.nd_obj).nd = mknode((yyvsp[(1) - (2)].nd_obj).nd, (yyvsp[(2) - (2)].nd_obj).nd, "decls"); ;}
     break;
 
   case 18:
 
 /* Line 1455 of yacc.c  */
-#line 93 ".\\parser.y"
+#line 92 ".\\parser.y"
     { (yyval.nd_obj).nd = mknode((yyvsp[(1) - (1)].nd_obj).nd, NULL, "decl"); ;}
     break;
 
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 95 ".\\parser.y"
+#line 94 ".\\parser.y"
     { (yyval.nd_obj).nd = mknode((yyvsp[(1) - (2)].nd_obj).nd, (yyvsp[(2) - (2)].nd_obj).nd, "if_decl"); ;}
     break;
 
   case 20:
 
 /* Line 1455 of yacc.c  */
-#line 96 ".\\parser.y"
+#line 95 ".\\parser.y"
     { (yyval.nd_obj).nd = mknode((yyvsp[(1) - (1)].nd_obj).nd, NULL, "for_decl"); ;}
     break;
 
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 97 ".\\parser.y"
+#line 96 ".\\parser.y"
     { (yyval.nd_obj).nd = mknode((yyvsp[(1) - (1)].nd_obj).nd, NULL, "while_decl"); ;}
     break;
 
   case 22:
 
 /* Line 1455 of yacc.c  */
-#line 98 ".\\parser.y"
+#line 97 ".\\parser.y"
     { (yyval.nd_obj).nd = mknode((yyvsp[(1) - (1)].nd_obj).nd, NULL, "atrib_decl"); ;}
     break;
 
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 101 ".\\parser.y"
+#line 100 ".\\parser.y"
     { (yyval.nd_obj).nd = mknode((yyvsp[(3) - (5)].nd_obj).nd, (yyvsp[(5) - (5)].nd_obj).nd, "if"); ;}
     break;
 
   case 24:
 
 /* Line 1455 of yacc.c  */
-#line 103 ".\\parser.y"
+#line 102 ".\\parser.y"
     { (yyval.nd_obj).nd = mknode((yyvsp[(1) - (2)].nd_obj).nd, NULL, "else"); ;}
     break;
 
   case 25:
 
 /* Line 1455 of yacc.c  */
-#line 104 ".\\parser.y"
+#line 103 ".\\parser.y"
     { (yyval.nd_obj).nd = NULL; ;}
     break;
 
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 106 ".\\parser.y"
+#line 105 ".\\parser.y"
     {
 	struct node* conds = mknode((yyvsp[(4) - (8)].nd_obj).nd,(yyvsp[(6) - (8)].nd_obj).nd,"conds");
 	struct node* inicio = mknode((yyvsp[(3) - (8)].nd_obj).nd, NULL, "inicio");
@@ -1677,7 +1676,7 @@ yyreduce:
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 113 ".\\parser.y"
+#line 112 ".\\parser.y"
     {
 	(yyval.nd_obj).nd = mknode((yyvsp[(3) - (5)].nd_obj).nd, (yyvsp[(5) - (5)].nd_obj).nd, "while");
 ;}
@@ -1686,21 +1685,21 @@ yyreduce:
   case 28:
 
 /* Line 1455 of yacc.c  */
-#line 117 ".\\parser.y"
+#line 116 ".\\parser.y"
     { (yyval.nd_obj).nd = mknode((yyvsp[(1) - (1)].nd_obj).nd, NULL, "corpo_decl_unic"); ;}
     break;
 
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 118 ".\\parser.y"
+#line 117 ".\\parser.y"
     { (yyval.nd_obj).nd = mknode((yyvsp[(2) - (3)].nd_obj).nd, NULL, "corpo_mult_decls"); ;}
     break;
 
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 121 ".\\parser.y"
+#line 120 ".\\parser.y"
     {
 		if(((yyvsp[(1) - (3)].nd_obj).type == 1 || 4) && ((yyvsp[(3) - (3)].nd_obj).type == 1 || (yyvsp[(3) - (3)].nd_obj).type == 4)){
 			(yyval.nd_obj).type = 1;
@@ -1720,7 +1719,7 @@ yyreduce:
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 135 ".\\parser.y"
+#line 134 ".\\parser.y"
     {
 		if(((yyvsp[(1) - (3)].nd_obj).type == 1 ) && (yyvsp[(3) - (3)].nd_obj).type == 1){
 			(yyval.nd_obj).type = 1;
@@ -1741,70 +1740,70 @@ yyreduce:
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 150 ".\\parser.y"
+#line 149 ".\\parser.y"
     {(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "/");}
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 151 ".\\parser.y"
+#line 150 ".\\parser.y"
     { (yyval.nd_obj).nd = mknode((yyvsp[(1) - (2)].nd_obj).nd, NULL, "++");}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 152 ".\\parser.y"
+#line 151 ".\\parser.y"
     {(yyval.nd_obj).nd = mknode(NULL, (yyvsp[(1) - (2)].nd_obj).nd, "++");}
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 153 ".\\parser.y"
+#line 152 ".\\parser.y"
     {(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "||");}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 154 ".\\parser.y"
+#line 153 ".\\parser.y"
     {(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "&&");}
     break;
 
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 155 ".\\parser.y"
+#line 154 ".\\parser.y"
     {(yyval.nd_obj).nd = mknode(NULL, (yyvsp[(2) - (2)].nd_obj).nd, "!");}
     break;
 
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 156 ".\\parser.y"
+#line 155 ".\\parser.y"
     {(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "==");}
     break;
 
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 157 ".\\parser.y"
+#line 156 ".\\parser.y"
     {(yyval.nd_obj).nd = mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd, "comp");}
     break;
 
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 158 ".\\parser.y"
+#line 157 ".\\parser.y"
     {(yyval.nd_obj).nd = mknode(NULL, (yyvsp[(2) - (3)].nd_obj).nd, "(exp)");}
     break;
 
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 159 ".\\parser.y"
+#line 158 ".\\parser.y"
     {
 		(yyval.nd_obj).nd = mknode((yyvsp[(1) - (1)].nd_obj).nd, NULL, "var");
 		(yyval.nd_obj).type = (yyvsp[(1) - (1)].nd_obj).type;
@@ -1814,7 +1813,7 @@ yyreduce:
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 163 ".\\parser.y"
+#line 162 ".\\parser.y"
     {
 		(yyval.nd_obj).nd = mknode((yyvsp[(1) - (1)].nd_obj).nd, NULL, "constval");
 		(yyval.nd_obj).type = (yyvsp[(1) - (1)].nd_obj).type;
@@ -1824,7 +1823,7 @@ yyreduce:
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 170 ".\\parser.y"
+#line 169 ".\\parser.y"
     {
 		struct node* temp = mknode(NULL, NULL, (yyvsp[(1) - (1)].nd_obj).name);
 		(yyval.nd_obj).nd = mknode(temp, NULL, "intconst");
@@ -1835,7 +1834,7 @@ yyreduce:
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 176 ".\\parser.y"
+#line 175 ".\\parser.y"
     {
 		struct node* temp = mknode(NULL, NULL, (yyvsp[(1) - (1)].nd_obj).name);
 		(yyval.nd_obj).nd = mknode(temp, NULL, "realconst");
@@ -1846,7 +1845,7 @@ yyreduce:
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 182 ".\\parser.y"
+#line 181 ".\\parser.y"
     {
 		struct node* temp = mknode(NULL, NULL, (yyvsp[(1) - (1)].nd_obj).name);
 		(yyval.nd_obj).nd = mknode(temp, NULL, "charconst");
@@ -1857,7 +1856,7 @@ yyreduce:
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 188 ".\\parser.y"
+#line 187 ".\\parser.y"
     {
 		struct node* temp = mknode(NULL, NULL, (yyvsp[(1) - (1)].nd_obj).name);
 		(yyval.nd_obj).nd = mknode(temp, NULL, "stringconst");
@@ -1868,7 +1867,7 @@ yyreduce:
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 196 ".\\parser.y"
+#line 195 ".\\parser.y"
     {
 	(yyval.nd_obj).nd = mknode((yyvsp[(1) - (4)].nd_obj).nd, (yyvsp[(3) - (4)].nd_obj).nd, "=");
 	if((yyvsp[(1) - (4)].nd_obj).type == 1){
@@ -1882,7 +1881,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1886 "parser.tab.c"
+#line 1885 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2094,7 +2093,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 205 ".\\parser.y"
+#line 204 ".\\parser.y"
 
 
 void yyerror (){
