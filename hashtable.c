@@ -76,7 +76,7 @@ void incr_scope(){ /* go to next scope */
 void symtab_dump(FILE * of){  
   int i;
   fprintf(of,"------------------------- -------------- ---------- ------------\n");
-  fprintf(of,"Cadeia                    Categoria      Tipo       Linhas\n");
+  fprintf(of,"Cadeia                    Token          Tipo       Linhas\n");
   fprintf(of,"------------------------- -------------- ---------- -------------\n");
   for (i=0; i < SIZE; ++i){ 
 	if (hash_table[i] != NULL){ 

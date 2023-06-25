@@ -4,8 +4,10 @@ int main(){
   int x;
   int y;
   int z;
-  x = 1;
+  char c;
+  c = ;
+  x = 1+;
   y = 2;
   z = x + y;
-return 0;
+  return 0;
 }
