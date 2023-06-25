@@ -87,7 +87,7 @@ void symtab_dump(FILE * of){
 			fprintf(of,"%-12s ",l->st_name);
 
 			//Printa a Categoria
-			fprintf(of, "%-*s ", l->st_cat);
+			fprintf(of, "%-*s ", (9-strlen(l->st_cat)), l->st_cat);
 
 
 			//Printa o tipo
