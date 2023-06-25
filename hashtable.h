@@ -32,6 +32,7 @@ typedef struct RefList{
 // Struct para no da lista
 typedef struct list_t{
     char st_name[MAXTOKENLEN];
+    char st_cat[MAXTOKENLEN];
     int st_size;
     int scope;
     RefList *lines;
