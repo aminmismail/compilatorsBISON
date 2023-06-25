@@ -10,6 +10,7 @@
 	extern int yylex();
 	void yyerror();
 	char treefilename[80];
+	FILE *symtabLog;
 	struct node* head;
 %}
 
@@ -114,13 +115,16 @@ while_decl: WHILE A_PARENTESES exp F_PARENTESES corpo {
 } ;
 
 corpo: decl  						{ $$.nd = mknode($1.nd, NULL, "corpo_decl_unic"); }
-	| A_CHAVES decls F_CHAVES		{ $$.nd = mknode($2.nd, NULL, "corpo_mult_decls"); }
-	| error PONTO_VIRG { yyerrok; yyclearin; printf("Erro Sintatico: Expressao esperada na linha, Talvez um { ou } %d\n", line);}
+	| A_CHAVES decls F_CHAVES		{ $$.nd = mknode($2.nd, NULL, "corpo_mult_decls"); } ;
 
 exp:
     exp SOMA exp {
-		if($1.type == $3.type){
-			$$.type = $1.type;
+		if(($1.type == 1 || 4) && ($3.type == 1 || $3.type == 4)){
+			$$.type = 1;
+			$$.nd = mknode($1.nd, $3.nd, "+");
+		}
+		else if(($1.type == 1 || $1.type == 2) && ($3.type == 1 || $3.type == 2)){
+			$$.type = 2;
 			$$.nd = mknode($1.nd, $3.nd, "+");
 		}
 		else{
@@ -129,69 +133,29 @@ exp:
 		}
 	} |
     exp MULT exp 	{
-		if($1.type == $3.type){
-			$$.type = $1.type;
+		if(($1.type == 1 ) && $3.type == 1){
+			$$.type = 1;
+			$$.nd = mknode($1.nd, $3.nd, "*");
+		}
+		else if(($1.type == 1 || $1.type == 2) && ($3.type == 1 || $3.type == 2)){
+			$$.type = 2;
 			$$.nd = mknode($1.nd, $3.nd, "*");
 		}
 		else{
 			printf("Tipo incompativel em expressao na linha %d\n", line);
 			$$.nd = mkerrnode($1.nd, $3.nd);
 		}
+		$$.nd = mknode($1.nd, $3.nd, "*")
 	} |
-    exp DIV exp {
-		if($1.type == $3.type){
-			$$.type = $1.type;
-			$$.nd = mknode($1.nd, $3.nd, "/");
-		}
-		else{
-			printf("Tipo incompativel em expressao na linha %d\n", line);
-			$$.nd = mkerrnode($1.nd, $3.nd);
-		}
-	} |
-    exp INCR 	 	{$$.nd = mknode($1.nd, NULL, "++")}	|
+    exp DIV exp  	{$$.nd = mknode($1.nd, $3.nd, "/")}		|
+    exp INCR 	 	{ $$.nd = mknode($1.nd, NULL, "++")}	|
     INCR exp     	{$$.nd = mknode(NULL, $1.nd, "++")}		|
-    exp OR exp 	 	{
-		if($1.type == $3.type){
-			$$.type = $1.type;
-			$$.nd = mknode($1.nd, $3.nd, "||");
-		}
-		else{
-			printf("Tipo incompativel em expressao na linha %d\n", line);
-			$$.nd = mkerrnode($1.nd, $3.nd);
-		}
-	} |
-    exp AND exp 	{
-		if($1.type == $3.type){
-			$$.type = $1.type;
-			$$.nd = mknode($1.nd, $3.nd, "&&")
-		}
-		else{
-			printf("Tipo incompativel em expressao na linha %d\n", line);
-			$$.nd = mkerrnode($1.nd, $3.nd);
-		}
-		} |
+    exp OR exp 	 	{$$.nd = mknode($1.nd, $3.nd, "||")}	|
+    exp AND exp 	{$$.nd = mknode($1.nd, $3.nd, "&&")}	|
     NOT exp 		{$$.nd = mknode(NULL, $2.nd, "!")}		|
-    exp IGUAL exp 	{
-		if($1.type == $3.type){
-			$$.type = $1.type;
-			$$.nd = mknode($1.nd, $3.nd, "==");
-		}
-		else{
-			printf("Tipo incompativel em expressao na linha %d\n", line);
-			$$.nd = mkerrnode($1.nd, $3.nd);
-		}
-		} |
-    exp COMP exp 	{
-		if($1.type == $3.type){
-			$$.type = $1.type;
-			$$.nd = mknode($1.nd, $3.nd, "comp");
-		}
-		else{
-			printf("Tipo incompativel em expressao na linha %d\n", line);
-			$$.nd = mkerrnode($1.nd, $3.nd);
-		}
-	} |
-    A_PARENTESES exp F_PARENTESES {$$.nd = mknode(NULL, $2.nd, "(exp)")} |
+    exp IGUAL exp 	{$$.nd = mknode($1.nd, $3.nd, "==")}	|
+    exp COMP exp 	{$$.nd = mknode($1.nd, $3.nd, "comp")}	|
+    A_PARENTESES exp F_PARENTESES {$$.nd = mknode(NULL, $2.nd, "(exp)")}|
     var {
 		$$.nd = mknode($1.nd, NULL, "var");
 		$$.type = $1.type;
@@ -200,7 +164,6 @@ exp:
 		$$.nd = mknode($1.nd, NULL, "constval");
 		$$.type = $1.type;
 	}
-	| error PONTO_VIRG { yyerrok; yyclearin;printf("Erro sintatico: Expressao inesperada %d\n", line);}
 ;
 
 constval:
@@ -235,9 +198,9 @@ atribuicao: var ATRIB exp PONTO_VIRG {
 	if($1.type == 1){
 		if($3.type == 1 || $3.type == 4) $$.type = 1;
 		else printf("Tipos de valores incompatíveis na linha %d\n", line);
-	}
-}
- | error PONTO_VIRG { yyerrok; yyclearin; printf("Erro Sintatico: Expressao esperada na linha %d\n", line);}
+	} 
+} | error { $$.nd = mkerrnode(NULL,NULL); printf("Erro sintatico: Expressao esperada na linha %d\n", line); yyerrok; yyclearin;  }
+
 
 %%
 
@@ -248,18 +211,21 @@ void yyerror (){
 int main(int argc, char *argv[]) {
  init_hash_table();
  yyin = fopen(argv[1], "r");
+ symtabLog = fopen("symTab_Log.txt", "w");
  if(yyin != NULL){
  	yyparse();
  	fclose(yyin);
- 	yyout = fopen("symboltab.txt", "w");
+ 	yyout = fopen("symtab_dump.txt", "w");
 	symtab_dump(yyout);
  	fclose(yyout);
-	printf("%s\n", treefilename);
+	sprintf(treefilename, "arvore_%s", argv[1]);
 	yyout = fopen(treefilename, "w");
 	printTree(yyout, head);
 	fclose(yyout);
  }
+ 
  else printf("Execute com um arquivo! Exemplo: a.exe nomedoarquivo.txt\n");
+ fclose(symtabLog);
  
  return 0;
 }

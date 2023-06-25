@@ -1,0 +1,38 @@
+Inserido '#include <stdio.h>' pela primeira vez na linha: 1
+Inserido '#include <stdlib.h>' pela primeira vez na linha: 2
+Inserido 'int' pela primeira vez na linha: 3
+Inserido 'main' pela primeira vez na linha: 3
+Inserido '(' pela primeira vez na linha: 3
+Inserido ')' pela primeira vez na linha: 3
+Inserido '{' pela primeira vez na linha: 3
+Encontrado 'int' novamente na linha: 4
+Inserido 'x' pela primeira vez na linha: 4
+Inserido ';' pela primeira vez na linha: 4
+Encontrado 'int' novamente na linha: 5
+Inserido 'y' pela primeira vez na linha: 5
+Encontrado ';' novamente na linha: 5
+Encontrado 'x' novamente na linha: 6
+Inserido '=' pela primeira vez na linha: 6
+Inserido '0' pela primeira vez na linha: 6
+Encontrado ';' novamente na linha: 6
+Inserido 'while' pela primeira vez na linha: 7
+Encontrado '(' novamente na linha: 7
+Encontrado 'x' novamente na linha: 7
+Inserido '<' pela primeira vez na linha: 7
+Inserido '5' pela primeira vez na linha: 7
+Encontrado ')' novamente na linha: 7
+Encontrado '{' novamente na linha: 7
+Encontrado 'x' novamente na linha: 8
+Encontrado '=' novamente na linha: 8
+Inserido '3' pela primeira vez na linha: 8
+Encontrado ';' novamente na linha: 8
+Inserido '}' pela primeira vez na linha: 9
+Encontrado 'y' novamente na linha: 10
+Encontrado '=' novamente na linha: 10
+Inserido '+' pela primeira vez na linha: 10
+Encontrado '3' novamente na linha: 10
+Encontrado ';' novamente na linha: 10
+Inserido 'return' pela primeira vez na linha: 11
+Encontrado 'x' novamente na linha: 11
+Encontrado ';' novamente na linha: 11
+Encontrado '}' novamente na linha: 12

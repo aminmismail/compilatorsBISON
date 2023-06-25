@@ -1,7 +1,7 @@
 DIG [0-9]
 INTEGER ([-]?{DIG}+)
 REAL ({DIG}+)\.({DIG}+)
-CHARACTER (\'{LETRA}\')
+CHARACTER (\'.\')
 LETRA [a-zA-Z]
 ID {LETRA}({LETRA}|{DIG})*
 STR (\".*\")
@@ -159,7 +159,7 @@ INCLUDE ("#include"[ ]*<.+\.h>)
 
 "\n" {++line;}
 
-[ \t\r]+ {;}
+[ \t\r]+
 
 . { printf("Token [%s] nao identificado na linha: %d\n", yytext, line);}
 

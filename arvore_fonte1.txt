@@ -1,0 +1,51 @@
+| | | ARVORE SINTATICA | | |
+programa
+ ├headers
+ |  ├#include <stdio.h>
+ |  ┕#include <stdlib.h>
+ ┕main
+ |  ├mainfun
+ |  |  ├defs
+ |  |  |  ├def
+ |  |  |  |  ├definicao
+ |  |  |  |  |  ├int
+ |  |  |  |  |  ┕x
+ |  |  |  ┕definicao
+ |  |  |  |  ├int
+ |  |  |  |  ┕y
+ |  |  ┕decls
+ |  |  |  ├decls
+ |  |  |  |  ├decls
+ |  |  |  |  |  ├decls
+ |  |  |  |  |  |  ├decl
+ |  |  |  |  |  |  |  ├atrib_decl
+ |  |  |  |  |  |  |  |  ├=
+ |  |  |  |  |  |  |  |  |  ├x
+ |  |  |  |  |  |  |  |  |  ┕constval
+ |  |  |  |  |  |  |  |  |  |  ├intconst
+ |  |  |  |  |  |  |  |  |  |  |  ├0
+ |  |  |  |  |  |  ┕while_decl
+ |  |  |  |  |  |  |  ├while
+ |  |  |  |  |  |  |  |  ├comp
+ |  |  |  |  |  |  |  |  |  ├var
+ |  |  |  |  |  |  |  |  |  |  ├x
+ |  |  |  |  |  |  |  |  |  ┕constval
+ |  |  |  |  |  |  |  |  |  |  ├intconst
+ |  |  |  |  |  |  |  |  |  |  |  ├5
+ |  |  |  |  |  |  |  |  ┕corpo_mult_decls
+ |  |  |  |  |  |  |  |  |  ├decl
+ |  |  |  |  |  |  |  |  |  |  ├atrib_decl
+ |  |  |  |  |  |  |  |  |  |  |  ├=
+ |  |  |  |  |  |  |  |  |  |  |  |  ├x
+ |  |  |  |  |  |  |  |  |  |  |  |  ┕constval
+ |  |  |  |  |  |  |  |  |  |  |  |  |  ├intconst
+ |  |  |  |  |  |  |  |  |  |  |  |  |  |  ├3
+ |  |  |  |  |  ┕atrib_decl
+ |  |  |  |  |  |  ├_ERROR_
+ |  |  |  |  ┕atrib_decl
+ |  |  |  |  |  ├_ERROR_
+ |  |  |  ┕atrib_decl
+ |  |  |  |  ├_ERROR_
+ |  ┕return
+ |  |  ┕var
+ |  |  |  ├x

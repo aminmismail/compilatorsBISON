@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+FILE *symtabLog;
 
 /* Tamanho maximo da tabela */
 #define SIZE 211

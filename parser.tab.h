@@ -88,7 +88,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 17 ".\\parser.y\\"
+#line 18 ".\\parser.y"
 
     struct var_name { 
 			char name[100];
@@ -100,7 +100,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 104 "parser.tab.h\\"
+#line 104 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
