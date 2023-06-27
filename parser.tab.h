@@ -74,10 +74,12 @@
      RETURN = 290,
      INCLUDE = 291,
      STRING = 292,
-     INTEGER = 293,
-     REAL = 294,
-     CHARACTER = 295,
-     STR = 296
+     PRINT = 293,
+     READ = 294,
+     INTEGER = 295,
+     REAL = 296,
+     CHARACTER = 297,
+     STR = 298
    };
 #endif
 
@@ -100,7 +102,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 104 "parser.tab.h"
+#line 106 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

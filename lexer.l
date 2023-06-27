@@ -103,6 +103,19 @@ INCLUDE ("#include"[ ]*<.+\.h>)
 	return VOID;
 }
 
+(print) {
+	strcpy(yylval.nd_obj.name,(yytext));
+	insert(yytext, strlen(yytext), 7, "print" ,line);
+	return PRINT;
+}
+
+(read) {
+	strcpy(yylval.nd_obj.name,(yytext));
+	insert(yytext, strlen(yytext), 7, "read" ,line);
+	return READ;
+}
+
+
 (return) {
 	strcpy(yylval.nd_obj.name,(yytext));
 	insert(yytext, strlen(yytext), 7, "return" ,line);

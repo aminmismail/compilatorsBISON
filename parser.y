@@ -27,7 +27,7 @@
 /* token definition */
 %token <nd_obj> ID
 %token <nd_obj> INCR DIG A_CHAVES A_COLCHETES A_PARENTESES F_CHAVES F_COLCHETES F_PARENTESES DOIS_PONTOS PONTO_VIRG VIRG PONTO IGUAL ATRIB SOMA SUB 
-%token <nd_obj> MULT DIV AND OR NOT COMP IF ELSE FOR WHILE CHAR INT DOUBLE FLOAT VOID RETURN INCLUDE STRING
+%token <nd_obj> MULT DIV AND OR NOT COMP IF ELSE FOR WHILE CHAR INT DOUBLE FLOAT VOID RETURN INCLUDE STRING PRINT READ
 %token <nd_obj> INTEGER
 %token <nd_obj> REAL
 %token <nd_obj> CHARACTER
@@ -40,7 +40,7 @@
 %left MULT DIV
 %right NOT
 
-%type <nd_obj> programa main retorno mainfun headers defs tipo var decls decl if_decl else_part for_decl while_decl corpo exp constval atribuicao def
+%type <nd_obj> programa main retorno mainfun headers defs tipo var decls decl if_decl else_part for_decl while_decl corpo exp constval atribuicao def print_decl read_decl
 
 %start programa
 
@@ -73,7 +73,7 @@ defs: defs def 	{ $$.nd = mknode($1.nd, $2.nd, "defs"); }
 
 def: tipo var PONTO_VIRG {
 	if(lookup($2.name)->st_type != 0){
-		printf("Erro: Redefinicao na linha %d\n", line);
+		printf("Erro Semantico: Redefinicao na linha %d\n", line);
 	}
 	set_type($2.name, $1.type);
 	$$.nd = mknode($1.nd, $2.nd, "definicao");
@@ -95,8 +95,13 @@ decls: decls decl 	{ $$.nd = mknode($1.nd, $2.nd, "decls"); }
 decl: if_decl else_part	{ $$.nd = mknode($1.nd, $2.nd, "if_decl"); }
 	| for_decl			{ $$.nd = mknode($1.nd, NULL, "for_decl"); }
 	| while_decl		{ $$.nd = mknode($1.nd, NULL, "while_decl"); }
-	| atribuicao		{ $$.nd = mknode($1.nd, NULL, "atrib_decl"); };
-;
+	| atribuicao		{ $$.nd = mknode($1.nd, NULL, "atrib_decl"); }
+	| print_decl		{ $$.nd = mknode($1.nd, NULL, "print_decl"); }
+	| read_decl			{ $$.nd = mknode($1.nd, NULL, "read_decl"); } ;
+
+print_decl: PRINT var PONTO_VIRG { $$.nd = mknode($2.nd, NULL, "print"); } ;
+
+read_decl: READ var PONTO_VIRG	{ $$.nd = mknode($2.nd, NULL, "read"); } ;
 
 if_decl: IF A_PARENTESES exp F_PARENTESES corpo { $$.nd = mknode($3.nd, $5.nd, "if"); } ;
 
@@ -135,7 +140,7 @@ exp:
 			$$.nd = mknode($1.nd, $3.nd, "*");
 		}
 		else{
-			printf("Tipo incompativel em expressao na linha %d\n", line);
+			printf("Erro Semantico: Tipo incompativel em expressao na linha %d\n", line);
 			$$.nd = mkerrnode($1.nd, $3.nd);
 			$$.type = 0;
 		}
@@ -146,7 +151,7 @@ exp:
 			$$.nd = mknode($1.nd, $3.nd, "/");
 		}
 		else{
-			printf("Tipo incompativel em expressao na linha %d\n", line);
+			printf("Erro Semantico: Tipo incompativel em expressao na linha %d\n", line);
 			$$.nd = mkerrnode($1.nd, $3.nd);
 			$$.type = 0;
 		}
@@ -159,7 +164,7 @@ exp:
 			$$.nd = mknode($1.nd, $3.nd, "||");
 		}
 		else{
-			printf("Tipo incompativel em expressao na linha %d\n", line);
+			printf("Erro Semantico: Tipo incompativel em expressao na linha %d\n", line);
 			$$.nd = mkerrnode($1.nd, $3.nd);
 			$$.type = 0;
 		}
@@ -170,7 +175,7 @@ exp:
 			$$.nd = mknode($1.nd, $3.nd, "&&");
 		}
 		else{
-			printf("Tipo incompativel em expressao na linha %d\n", line);
+			printf("Erro Semantico: Tipo incompativel em expressao na linha %d\n", line);
 			$$.nd = mkerrnode($1.nd, $3.nd);
 			$$.type = 0;
 		}
@@ -182,7 +187,7 @@ exp:
 			$$.type = $1.type;
 		}
 		else{
-			printf("Tipo incompativel em expressao na linha %d\n", line);
+			printf("Erro Semantico: Tipo incompativel em expressao na linha %d\n", line);
 			$$.nd = mkerrnode($1.nd, $3.nd);
 			$$.type = 0;
 		}
@@ -193,7 +198,7 @@ exp:
 			$$.type = $1.type;
 		}
 		else{
-			printf("Tipo incompativel em expressao na linha %d\n", line);
+			printf("Erro Semantico: Tipo incompativel em expressao na linha %d\n", line);
 			$$.nd = mkerrnode($1.nd, $3.nd);
 			$$.type = 0;
 		}
@@ -222,7 +227,7 @@ constval:
 		$$.type = 2;
 	}
 	|
-	CHAR {
+	CHARACTER {
 		struct node* temp = mknode(NULL, NULL, $1.name);
 		$$.nd = mknode(temp, NULL, "charconst");
 		$$.type = 1;
@@ -243,11 +248,15 @@ atribuicao: var ATRIB exp PONTO_VIRG {
 		set_type(temp->st_name, $3.type);
 		$$.nd = mknode($1.nd, $3.nd, "=");
 	} 
-	else{
-		printf("Erro semantico: Atribuicao de tipo incompativel na linha %d\n", line);
+	else if($1.type == 0){
+		printf("Erro semantico: '%s' nao declarado na linha %d\n", $1.name, line);
 		$$.nd = mkerrnode(NULL,NULL);
 	}
-} | error { $$.nd = mkerrnode(NULL,NULL); printf("Erro sintatico: Expressao esperada na linha %d\n", line); yyerrok; yyclearin;  }
+	else {
+		printf("Erro semantico: Atribuicao de tipo incompativel na linha %d\n", line);
+		$$.nd = mkerrnode(NULL,NULL); }
+	}
+	| error { $$.nd = mkerrnode(NULL,NULL); printf("Erro sintatico: Expressao esperada na linha %d\n", line); yyerrok; yyclearin;  }
 
 
 %%
